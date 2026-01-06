@@ -1,0 +1,11 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Save files
+verdant_code_save.json
+game_progress_*.json
+
+# Temporary files
+*.tmp
