@@ -30,6 +30,9 @@ Documentation and repository housekeeping; no gameplay changes.
   ~9 MB. Every release remains recoverable from git history by tag or commit SHA
   (see [docs/versions.md](docs/versions.md)). Only the current release (`v2.2.0/`)
   stays in the tree.
+- **Clean root:** removed the original prototype `Pythons and Dragons1.0.py` and a
+  stale `game_progress.json` sample save from the repository root. Both remain
+  recoverable from git history.
 
 ### Fixed
 - Reconciled the current release file's version metadata to `2.2.0` (header

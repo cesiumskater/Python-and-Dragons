@@ -73,10 +73,13 @@ Python-and-Dragons/
 ├── CHANGELOG.md
 ├── docs/
 ├── scripts/create-release-tags.sh   # publish the per-release tags/Releases
-├── Pythons and Dragons1.0.py         # original single-file prototype (kept as the namesake origin)
-├── game_progress.json                # legacy sample save (candidate for removal)
 └── v2.2.0/                           # the current, runnable release
 ```
+
+> The original prototype (`Pythons and Dragons1.0.py`) and a stale sample save
+> (`game_progress.json`) used to sit at the root; both were removed for a clean
+> root and remain recoverable from history (e.g.
+> `git checkout 8ea1d67 -- "Pythons and Dragons1.0.py"`).
 
 ## Quick reference: which file do I run?
 

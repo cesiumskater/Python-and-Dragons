@@ -156,8 +156,6 @@ Python-and-Dragons/
 ├── CHANGELOG.md               # all history, consolidated
 ├── docs/                      # living documentation
 ├── scripts/                   # release-tag publishing helper
-├── Pythons and Dragons1.0.py  # original prototype (kept as the namesake origin)
-├── game_progress.json         # legacy sample save (candidate for removal)
 └── v2.2.0/                    # the current, runnable game
 ```
 
@@ -194,6 +192,9 @@ affect gameplay, but resolving them would tighten the project considerably.
   reports `2.2.0` consistently.
 - ✅ **Inconsistent folder casing** (`V1.3.0/` vs lowercase `vX.Y.Z`) — moot now
   that historical folders live only in git history (tagged `v1.3.0`).
+- ✅ **Legacy root files removed** for a clean root: the original prototype
+  `Pythons and Dragons1.0.py` and the stale `game_progress.json` save. Both remain
+  recoverable from history (e.g. `git checkout 8ea1d67 -- "Pythons and Dragons1.0.py"`).
 
 **Still open:**
 
@@ -209,13 +210,9 @@ affect gameplay, but resolving them would tighten the project considerably.
 - **No `LICENSE` file.** The project is described as "open source / educational,"
   and one changelog references "MIT License — see LICENSE file," but no such file
   exists. Adding an explicit license would resolve the ambiguity.
-- **Legacy root files.** `Pythons and Dragons1.0.py` (the original prototype) and
-  `game_progress.json` (a stale sample save) remain at the root. They're kept for
-  now — the prototype as the project's namesake origin — but both are candidates
-  for removal (recoverable from history).
-- **Project naming drift:** the repository is *Python and Dragons*, the root
-  prototype file is *Pythons and Dragons1.0.py* (internally `the_verdant_code.py`),
-  while the game itself is *The Serpent's Code* (v0) and then *The Verdant Code*
+- **Project naming drift:** the repository is *Python and Dragons*, the original
+  prototype was *Pythons and Dragons1.0.py* (internally `the_verdant_code.py`),
+  while the game itself was *The Serpent's Code* (v0) and then *The Verdant Code*
   (v1+). The root README treats "Python and Dragons" as the repo/project name and
   "The Verdant Code" as the game's in-universe title.
 

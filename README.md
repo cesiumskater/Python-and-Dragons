@@ -60,8 +60,6 @@ Python-and-Dragons/
 ├── CHANGELOG.md               # Consolidated, version-by-version change history
 ├── docs/                      # Project documentation (see docs/README.md)
 ├── scripts/                   # Maintenance scripts (e.g. publishing release tags)
-├── Pythons and Dragons1.0.py  # Original single-file prototype (the namesake origin)
-├── game_progress.json         # Legacy sample save
 └── v2.2.0/                    # The current, runnable release
 ```
 
