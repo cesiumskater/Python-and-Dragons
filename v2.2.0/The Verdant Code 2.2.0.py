@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 '''
-THE VERDANT CODE 2.1.3 - MASTER EDITION
+THE VERDANT CODE 2.2.0 - MASTER EDITION
 A Complete Python Learning Adventure from Zero to Mythic Hero
 
 Created by Danny (Cesium) P.
 MASTER IMPLEMENTATION - All 181 Lessons Fully Tested & Operational
 
-Version 2.1.3 Features:
+Version 2.2.0 Features:
 - EVERY lesson fully implemented with comprehensive, tested content
 - COMPLETE Fraylon storyline woven through all Acts (0-IX)
 - DETAILED pitfalls (3-5 per lesson) and best practices
@@ -65,8 +65,8 @@ if platform.system() == 'Windows':
 # VERSION INFORMATION
 # ============================================================================
 
-VERSION = "2.1.6"
-RELEASE_DATE = "January 7, 2026"
+VERSION = "2.2.0"
+RELEASE_DATE = "January 23, 2026"
 RELEASE_TYPE = "Master Edition - All Acts Complete (181 Lessons)"
 TOPICS_COUNT = 181
 TOTAL_XP_AVAILABLE = 2715

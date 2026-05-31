@@ -12,15 +12,43 @@ and the project aims to follow [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — Repository maintenance
+
+Documentation and repository housekeeping; no gameplay changes.
+
+### Added
+- Root `README.md` (with a Version History section), consolidated `CHANGELOG.md`,
+  and a `docs/` folder (index, version history, architecture, release map).
+- `scripts/create-release-tags.sh` to publish a git tag (and optional draft
+  GitHub Release) for every documented version.
+- Annotated git tags for all releases `v0.0.4` … `v2.2.0` (created locally;
+  **push pending** — the sandbox proxy blocks tag pushes; run the script above).
+
+### Changed
+- **Removed version sprawl:** the 18 historical version folders (`v0.0.X` …
+  `v2.1.6`) were deleted from the working tree, shrinking it from ~149 MB to
+  ~9 MB. Every release remains recoverable from git history by tag or commit SHA
+  (see [docs/versions.md](docs/versions.md)). Only the current release (`v2.2.0/`)
+  stays in the tree.
+- **Clean root:** removed the original prototype `Pythons and Dragons1.0.py` and a
+  stale `game_progress.json` sample save from the repository root. Both remain
+  recoverable from git history.
+
+### Fixed
+- Reconciled the current release file's version metadata to `2.2.0` (header
+  docstring, `VERSION` constant, and `RELEASE_DATE`); it previously reported
+  `2.1.3` / `2.1.6`.
+- Captured the legacy `Save updates 0_0_2.txt` note as the `[0.0.2]` entry below,
+  then removed the redundant file.
+
 ## [2.2.0] — 2026-01-23 (Current)
 
 ### Changed
 - Code cleanup pass on the Master Edition codebase.
 
-### Known Issues
-- Version metadata is inconsistent within the release file: the header docstring
-  reads `2.1.3`, the `VERSION` constant reads `2.1.6`, while the folder and
-  release are `2.2.0`. These should be reconciled to `2.2.0`.
+> The version-metadata inconsistency originally noted here (header `2.1.3` /
+> `VERSION` `2.1.6` vs. release `2.2.0`) was resolved in the Unreleased
+> maintenance section above.
 
 ## [2.1.6] — 2026-01-07
 

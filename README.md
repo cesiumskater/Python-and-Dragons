@@ -59,19 +59,20 @@ Python-and-Dragons/
 ├── README.md                  # You are here
 ├── CHANGELOG.md               # Consolidated, version-by-version change history
 ├── docs/                      # Project documentation (see docs/README.md)
-├── Pythons and Dragons1.0.py  # Original single-file prototype (historical)
-├── v0.0.X/ … v2.2.0/          # Released versions, preserved as historical snapshots
-└── Save updates 0_0_2.txt     # Legacy dev note (captured in CHANGELOG → v0.0.2)
+├── scripts/                   # Maintenance scripts (e.g. publishing release tags)
+└── v2.2.0/                    # The current, runnable release
 ```
 
-Each `vX.Y.Z/` folder is a **frozen snapshot** of that release, including the
-game file and the documentation written for it at the time. For a guided tour of
-every folder and its notable files, see **[docs/versions.md](docs/versions.md)**.
+Only the **current** release lives in the tree. Every earlier release
+(`v0.0.x` → `v2.1.6`) is preserved in git history and recoverable by tag or
+commit — see the **[release map](docs/versions.md)**.
 
-> **Note on the version folders:** they are intentionally preserved to keep the
-> project's full history visible. A recommended strategy for taming this
-> "version sprawl" (git tags + GitHub Releases, archiving, and de-duplication) is
-> documented in **[docs/version-history.md](docs/version-history.md#documentation--cleanup-strategy)**.
+> **History preserved, sprawl removed.** The project used to keep a full folder
+> per release (~140 MB of duplicated game files). Those folders now live only in
+> git history; annotated tags mark each one (publish them with
+> [`scripts/create-release-tags.sh`](scripts/create-release-tags.sh)). The full
+> rationale is in
+> **[docs/version-history.md](docs/version-history.md#documentation--cleanup-strategy)**.
 
 ---
 
