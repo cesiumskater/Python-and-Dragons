@@ -1,121 +1,86 @@
-# Version Folder Map
+# Release Map & History Recovery
 
-A guided index of every versioned folder in the repository. Each `vX.Y.Z/` folder
-is a **frozen historical snapshot** of that release — its game file plus the
-documentation written for it at the time. This map lets you find what you need
-without opening twenty folders.
+The repository previously kept a separate `vX.Y.Z/` folder for every release
+(~140 MB of duplicated game files). Those historical folders have been **removed
+from the working tree** to keep the repo lean — but **nothing was lost**. Every
+release is preserved in git history and can be retrieved at any time.
 
-For the *why* behind keeping (and eventually archiving) these folders, see the
-[cleanup strategy](version-history.md#documentation--cleanup-strategy).
+Only the **current** release lives in the tree, under [`v2.2.0/`](../v2.2.0/).
 
-> **Legend:** 🎮 = runnable game file · 📄 = documentation · 🧰 = dev/utility
-> scripts (not part of the game)
-
----
-
-## Root-level (legacy)
-
-| File | Notes |
-|------|-------|
-| 🎮 `Pythons and Dragons1.0.py` | The original single-file prototype (internally `the_verdant_code.py`). Player "Grixle", Act 1 start. |
-| `game_progress.json` | A sample/legacy save for the root prototype. |
-| 📄 `Save updates 0_0_2.txt` | Legacy dev note on the save system — now captured in the [CHANGELOG (v0.0.2)](../CHANGELOG.md). Safe to remove once you're happy it's preserved there. |
-
-## Era 1 — The Serpent's Code
-
-### `v0.0.X/`
-The original prototype line.
-
-- 🎮 `serpents_and_dragons_v0_0_0.py` … `_v0_0_4.py` — the five iterations of *The
-  Serpent's Code*.
-- 📄 `v_0_0_0_Features.txt` — the original feature list (5 quests + core systems).
-- `game_progress.json` — sample save.
-
-## Era 2 — The Verdant Code (v1)
-
-### `v1.1.0/` — Enhanced Edition
-- 🎮 `the_verdant_code_1.1.0.py`
-- 📄 `README_ENHANCED.md`, `IMPROVEMENTS_SUMMARY.md`, `TOPICS_VERIFIED.md`
-
-### `v1.1.1/`
-- 🎮 `the_verdant_code_1.1.1.py`
-- 📄 `README_ENHANCED.md`, `IMPROVEMENTS_SUMMARY.md`, `TOPICS_VERIFIED.md`
-
-### `v1.1.2/` — Cybersecurity & Zen
-- 🎮 `the_verdant_code_1.1.2.py`
-- 📄 `CYBERSECURITY_TOPICS_ADDED.md`, `ZEN_OF_PYTHON_ADDED.md`,
-  `GAME_FIXES_SUMMARY.md`, `STORY_MODE_DEMO.md`
-
-### `v1.1.3/`
-- 🎮 `the_verdant_code_1.1.3.py`
-- 📄 `STORYLINE_SUMMARY.md`, `TABLE_OF_CONTENTS.md`, `FINAL_SUMMARY.md`
-
-### `v1.1.4/`
-- 🎮 `the_verdant_code_1.1.3.py` *(note: file retains the 1.1.3 name)*
-- 📄 `STORYLINE_SUMMARY.md`, `TABLE_OF_CONTENTS.md`, `FINAL_SUMMARY.md`
-
-### `v1.1.5/` — "The Lost Language"
-- 🎮 `the_verdant_code_1.1.5.py`
-- 📄 `README.md`, `CHANGELOG.md`, `RELEASE_NOTES_v1.1.5.md`, `STORYLINE.md`,
-  `INDEX.md`, `IMPLEMENTATION_SUMMARY.md`
-
-### `v1.2.0/` — "From Zero to Enterprise"
-The most documentation-heavy release (13 Markdown files).
-- 🎮 `the_verdant_code_1.2.0_demo.py`, `portfolio_project_task_manager.py`
-- 📄 `README.md`, `CHANGELOG_v1.2.0.md`, `EXECUTIVE_SUMMARY.md`, `ASSESSMENT.md`,
-  `BEGINNER_ONBOARDING.md`, `ENTERPRISE_SKILLS_ROADMAP.md`, `PROPOSED_LESSONS.md`,
-  `IMPLEMENTATION_NOTES.md`, `IMPLEMENTATION_ROADMAP.md`, `PROJECT_STATUS.md`,
-  `DELIVERABLES_SUMMARY.md`, `QUICKSTART.md`, `START_HERE.md`
-
-### `v1.2.1/`
-- 🎮 `the_verdant_code_1.2.1.py`
-- 📄 `README.md`, `RELEASE_NOTES.md`, `QUICKSTART.md`, `BEGINNER_ONBOARDING.md`,
-  `ENTERPRISE_SKILLS_ROADMAP.md`
-
-### `v1.2.2/` — ⚠️ heaviest cleanup target (~96 MB)
-Acts 0–VIII complete; Act IX authored. This folder also accumulated a large
-amount of **transient debugging scaffolding** that is not part of the game.
-- 🎮 `the_verdant_code_1.2.2.py` (and `_COMPLETE.py`)
-- 📄 `README.md`, `STORYLINE_PROGRESSION.md`, `LESSON_TEMPLATE_STANDARDS.md`
-- 🧰 **~14 backup copies** (`*.bak`, `*.backup_*`, `*.before_fix`, `*.temp`, plus
-  `_work`/`_fresh`/`_master` variants) and **~15 `fix_*.py` quote-repair scripts**
-  (`fix_quotes.py`, `fix_all_v2.py`, `surgical_quote_fix.py`, …), test scripts,
-  and Act IX lesson-generation scripts. **Candidates for deletion** — git
-  preserves them. See the [cleanup strategy](version-history.md#recommended-strategy-in-priority-order).
-
-### `V1.3.0/` — "The Complete Journey" *(note the capital `V`)*
-All 181 lessons; shipped with the known quote bug + a fix utility.
-- 🎮 `the_verdant_code_1.3.0.py` (and `_clean.py`, `_fixed.py`)
-- 📄 `README.md`, `CHANGELOG.md`, `RELEASE_NOTES.md`, `MAINTENANCE_GUIDE.md`,
-  `VERSION_1.3.0_COMPLETE.md`
-- 🧰 `fix_quotes.py`, `diagnose.py`, `find_all_mismatches.py`, `test_game.py`, and
-  several `create_*`/`*_quote_fix.py` build scripts.
-
-## Era 3 — Master Edition (v2)
-
-### `v2.0.0/` — Master Edition
-- 🎮 `The Verdant Code 2.0.py`
-- 📄 `README.md`, `RELEASE_NOTES_V2.0.0.md`, `VERSION_2.0.0_COMPLETE.md`
-
-### `v2.1.0/` – `v2.1.3/`
-Each contains the release's game file plus a `README.md`:
-- 🎮 `The Verdant Code 2.1.0.py` … `2.1.3.py`
-- 📄 `README.md` (badges note the tests passing / PEP compliance per release)
-
-### `v2.1.4/`, `v2.1.5/`, `v2.1.6/`
-Game file only (no per-folder README):
-- 🎮 `The Verdant Code 2.1.4.py` / `2.1.5.py` / `2.1.6.py`
-
-### `v2.2.0/` — Current release
-- 🎮 `The Verdant Code 2.2.0.py`
-- ⚠️ In-file version metadata is stale here (header says `2.1.3`, `VERSION`
-  constant says `2.1.6`); see [open items](version-history.md#known-inconsistencies--open-items).
+For the *why* and the broader strategy, see
+[version-history.md](version-history.md#documentation--cleanup-strategy).
 
 ---
+
+## How to retrieve any historical version
+
+Each release is recoverable two ways. **Tags** are the friendly handle; the
+**commit SHA** always works even if tags haven't been pushed yet.
+
+```bash
+# By tag (after the tags have been pushed — see note below):
+git checkout v1.3.0           # working tree now contains the old V1.3.0/ folder
+
+# By commit SHA (always works, no tags required):
+git checkout 54daf0e          # the "Historical Releases" snapshot (all v0–v1.3.0 folders)
+
+# Just extract one folder without switching branches:
+git restore --source=54daf0e --staged --worktree -- "V1.3.0"
+# (older git: git checkout 54daf0e -- "V1.3.0")
+```
+
+> **Note on tags:** annotated tags for every version were created during cleanup
+> but **could not be pushed** from the cleanup environment (the sandbox git proxy
+> rejects tag pushes with HTTP 403). Run
+> [`scripts/create-release-tags.sh`](../scripts/create-release-tags.sh) from a
+> machine with push access to publish them (and, with `--releases`, to create
+> draft GitHub Releases). Until then, use the commit SHAs below.
+
+## Release → tag → commit map
+
+| Version | Tag | Commit | Lived in folder | Notes |
+|---------|-----|--------|-----------------|-------|
+| Prototype (Serpent's Code) | `v0.0.4` | `54daf0e` | `v0.0.X/` | 5 prototype iterations (`v0_0_0`–`v0_0_4`) |
+| 1.1.0 | `v1.1.0` | `54daf0e` | `v1.1.0/` | Enhanced Edition: Story/Reference modes, TOC |
+| 1.1.1 | `v1.1.1` | `54daf0e` | `v1.1.1/` | |
+| 1.1.2 | `v1.1.2` | `54daf0e` | `v1.1.2/` | Cybersecurity topics, Zen of Python |
+| 1.1.3 | `v1.1.3` | `54daf0e` | `v1.1.3/` | |
+| 1.1.4 | `v1.1.4` | `54daf0e` | `v1.1.4/` | (game file retained the 1.1.3 name) |
+| 1.1.5 | `v1.1.5` | `54daf0e` | `v1.1.5/` | "The Lost Language": Unicode + list mini-game |
+| 1.2.0 | `v1.2.0` | `54daf0e` | `v1.2.0/` | "Zero to Enterprise": Acts 0, VIII, IX; assessment |
+| 1.2.1 | `v1.2.1` | `54daf0e` | `v1.2.1/` | Onboarding polish |
+| 1.2.2 | `v1.2.2` | `54daf0e` | `v1.2.2/` | Acts 0–VIII complete; Act IX authored. (Also held ~96 MB of backup/fix-script clutter — not carried forward.) |
+| 1.3.0 | `v1.3.0` | `54daf0e` | `V1.3.0/` | "The Complete Journey": all 181 lessons registered |
+| 2.0.0 | `v2.0.0` | `e106f29` | `v2.0.0/` | Master Edition; syntax/quote fixes; production-ready |
+| 2.1.0 | `v2.1.0` | `3897384` | `v2.1.0/` | Bug fixes, PEP 8 |
+| 2.1.1 | `v2.1.1` | `2c27165` | `v2.1.1/` | 3,439 tests passing |
+| 2.1.2 | `v2.1.2` | `539c6c4` | `v2.1.2/` | PEP 8 & PEP 20 |
+| 2.1.3 | `v2.1.3` | `dd3f0a1` | `v2.1.3/` | 5,611 tests passing |
+| 2.1.4 | `v2.1.4` | `1b84552` | `v2.1.4/` | Menu navigation fixes |
+| 2.1.5 | `v2.1.5` | `8c0de0e` | `v2.1.5/` | Reference Mode lesson flow |
+| 2.1.6 | `v2.1.6` | `4bcdaaa` | `v2.1.6/` | Testing verification |
+| **2.2.0** | `v2.2.0` | `8ea1d67` | **`v2.2.0/` (current, in tree)** | Code cleanup — the release you can run today |
+
+> The historical `v0–v1.3.0` releases all entered the repository in a single
+> "Historical Releases" commit (`54daf0e`), so their tags share that commit.
+> Checking it out yields a tree containing all of those folders at once.
+
+## What's in the tree today
+
+```
+Python-and-Dragons/
+├── README.md
+├── CHANGELOG.md
+├── docs/
+├── scripts/create-release-tags.sh   # publish the per-release tags/Releases
+├── Pythons and Dragons1.0.py         # original single-file prototype (kept as the namesake origin)
+├── game_progress.json                # legacy sample save (candidate for removal)
+└── v2.2.0/                           # the current, runnable release
+```
 
 ## Quick reference: which file do I run?
 
 - **Just want to play?** → `v2.2.0/The Verdant Code 2.2.0.py`
-- **Want the original prototype?** → `v0.0.X/serpents_and_dragons_v0_0_4.py`
-- **Studying the evolution?** → walk the table in
-  [version-history.md](version-history.md#at-a-glance) or the [CHANGELOG](../CHANGELOG.md).
+- **Want a historical version?** → check out its commit/tag from the table above.
+- **Studying the evolution?** → see [version-history.md](version-history.md#at-a-glance)
+  and the [CHANGELOG](../CHANGELOG.md).

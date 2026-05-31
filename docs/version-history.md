@@ -115,56 +115,54 @@ they are as historical snapshots.
 [versions.md](versions.md) maps every folder and its notable files so the sprawl
 is at least browsable.
 
-**3. Tag every release and create GitHub Releases (recommended).**
-For each released version, create an annotated git tag (e.g. `v2.2.0`) on the
-commit that introduced it, and a GitHub Release using the already-written release
-notes. This is the *real* mechanism for "preserving version history" — it makes
-every version downloadable and diffable without keeping it in the working tree.
+**3. Tag every release (✅ created; ⚠️ push pending).**
+An annotated git tag was created for every documented release (see the
+[release map](versions.md#release--tag--commit-map)) on the commit that
+introduced it. This is the *real* mechanism for "preserving version history" — it
+makes every version checkout-able and diffable without keeping it in the working
+tree. **These tags could not be pushed from the cleanup environment** (the sandbox
+git proxy returns HTTP 403 on tag pushes), so run
+[`scripts/create-release-tags.sh`](../scripts/create-release-tags.sh) from a
+machine with push access to publish them — and, with `--releases`, to create
+draft GitHub Releases.
 
-```bash
-# Example, once per version, on the appropriate commit:
-git tag -a v2.2.0 -m "The Verdant Code 2.2.0"
-git push origin --tags
-```
+**4. Remove the historical version folders (✅ done).**
+The working tree now contains only the **current** release (`v2.2.0/`). All 18
+earlier version folders were deleted; they remain fully recoverable from git
+history by tag or commit SHA (`git checkout v1.3.0`, or
+`git checkout 54daf0e`). This reclaimed ~140 MB from the working tree
+(149 MB → ~9 MB).
 
-**4. Archive the historical version folders (recommended).**
-Once tags/releases exist, the working tree only needs the **current** release.
-Two safe options, in increasing tidiness:
-   - **Minimum risk:** move all but the latest into a single `archive/` (or
-     `releases/`) directory so the repo root shows only the current game.
-   - **Cleanest:** remove the historical folders from the working tree entirely;
-     they remain fully recoverable from their tags (`git checkout v1.3.0`).
-   Either way, the canonical, runnable game lives at the root or in a single
-   `latest/`-style location.
+**5. Purge transient artifacts from `v1.2.2/` (✅ done).**
+The ~14 multi-MB backups and ~15 `fix_*.py` scripts went away with the `v1.2.2/`
+folder — they were debugging scaffolding, not releases, and git retains them.
+(If `.git` size ever matters, `git filter-repo` could drop the large blobs from
+history; the current `.git` is only ~4.8 MB, so this is not urgent.)
 
-**5. Purge transient artifacts from `v1.2.2/` (recommended, high impact).**
-The 14 backups and 15 `fix_*.py` scripts can be deleted outright — they are
-debugging scaffolding, not releases, and git retains them. This alone reclaims
-~90 MB. (Optionally, use `git filter-repo` to drop them from history if the
-`.git` size ever becomes a concern; the current `.git` is only ~4.8 MB, so this
-is not urgent.)
+**6. Reconcile in-file version metadata (✅ done).**
+The current release file now reports `2.2.0` consistently (header, `VERSION`
+constant, and `RELEASE_DATE`). The `V1.3.0/` casing inconsistency is moot now
+that the folder lives only in history.
 
-**6. Normalize naming and metadata (recommended).**
-Rename `V1.3.0/` → `v1.3.0/` for consistency, and reconcile the in-file version
-metadata (see open items below).
-
-**7. Add a `.gitattributes`/Git LFS policy if large game files persist.**
-If the multi-MB single-file game continues to grow, consider tracking it with
+**7. (Optional, future) Git LFS for the large game file.**
+The single-file game is ~4.4 MB. If it keeps growing, consider tracking it with
 Git LFS so clones stay lean.
 
-### Target end-state
+### Current end-state
 
 ```
 Python-and-Dragons/
-├── README.md            # front door (current version)
-├── CHANGELOG.md         # all history, consolidated
-├── docs/                # living documentation
-├── the_verdant_code.py  # the current, runnable game (single file)
-└── archive/             # optional: prior releases, or rely on git tags instead
+├── README.md                  # front door (current version)
+├── CHANGELOG.md               # all history, consolidated
+├── docs/                      # living documentation
+├── scripts/                   # release-tag publishing helper
+├── Pythons and Dragons1.0.py  # original prototype (kept as the namesake origin)
+├── game_progress.json         # legacy sample save (candidate for removal)
+└── v2.2.0/                    # the current, runnable game
 ```
 
-Everything that exists today still exists — in tags, releases, and git history —
-but a newcomer sees a clean, obvious project instead of twenty folders.
+Everything that ever existed still exists — in tags and git history — but a
+newcomer now sees a clean, obvious project instead of twenty folders.
 
 ---
 
@@ -189,9 +187,20 @@ above and reconcile the metadata inconsistencies below.
 These are documentation/metadata issues surfaced during cleanup. They do **not**
 affect gameplay, but resolving them would tighten the project considerably.
 
-- **In-file version metadata disagrees with itself** in the current release: the
-  `v2.2.0` file's header docstring says `2.1.3`, its `VERSION` constant says
-  `2.1.6`, and the folder/release is `2.2.0`. These should all read `2.2.0`.
+**Resolved during cleanup:**
+
+- ✅ **In-file version metadata.** The current release file previously disagreed
+  with itself (header `2.1.3`, `VERSION` constant `2.1.6`, folder `2.2.0`); it now
+  reports `2.2.0` consistently.
+- ✅ **Inconsistent folder casing** (`V1.3.0/` vs lowercase `vX.Y.Z`) — moot now
+  that historical folders live only in git history (tagged `v1.3.0`).
+
+**Still open:**
+
+- ⚠️ **Tags not yet published.** Per-release tags were created but not pushed
+  (sandbox proxy blocks tag pushes). Run
+  [`scripts/create-release-tags.sh`](../scripts/create-release-tags.sh) to publish
+  them and the draft GitHub Releases.
 - **Conflicting release dates** in historical docs — e.g. `v1.1.5` is dated both
   `2024-11-15` (in the v1.2.0 changelog) and `2025-12-22` (in its own changelog);
   `v1.2.0` is also dated `2025-12-22`. The git history shows all commits landed in
@@ -200,14 +209,16 @@ affect gameplay, but resolving them would tighten the project considerably.
 - **No `LICENSE` file.** The project is described as "open source / educational,"
   and one changelog references "MIT License — see LICENSE file," but no such file
   exists. Adding an explicit license would resolve the ambiguity.
-- **Inconsistent folder casing:** `V1.3.0/` (capital `V`) versus the lowercase
-  `vX.Y.Z` used everywhere else.
+- **Legacy root files.** `Pythons and Dragons1.0.py` (the original prototype) and
+  `game_progress.json` (a stale sample save) remain at the root. They're kept for
+  now — the prototype as the project's namesake origin — but both are candidates
+  for removal (recoverable from history).
 - **Project naming drift:** the repository is *Python and Dragons*, the root
   prototype file is *Pythons and Dragons1.0.py* (internally `the_verdant_code.py`),
   while the game itself is *The Serpent's Code* (v0) and then *The Verdant Code*
   (v1+). The root README treats "Python and Dragons" as the repo/project name and
   "The Verdant Code" as the game's in-universe title.
 
-> These items are intentionally **not** auto-fixed here, because they touch source
-> and game files. They are recorded so the maintainer can address them
-> deliberately.
+> The remaining open items are left for the maintainer to decide on
+> deliberately — publishing tags requires push access this environment lacks, and
+> adding a license or renaming the project are owner-level calls.
