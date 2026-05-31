@@ -69,7 +69,7 @@ VERSION = "2.2.0"
 RELEASE_DATE = "January 23, 2026"
 RELEASE_TYPE = "Master Edition - All Acts Complete (181 Lessons)"
 TOPICS_COUNT = 181
-TOTAL_XP_AVAILABLE = 2715
+TOTAL_XP_AVAILABLE = 2000  # 180 lessons x10 + persistence_finale 200
 
 
 # ============================================================================
@@ -350,14 +350,16 @@ class SkillAssessment:
         '''Calculate recommended Act'''
         if self.score < 5:
             return 0
-        elif self.score < 10:
+        elif self.score < 9:
             return 1
-        elif self.score < 15:
+        elif self.score < 13:
             return 2
-        elif self.score < 20:
+        elif self.score < 17:
             return 3
-        elif self.score < 25:
+        elif self.score < 21:
             return 4
+        elif self.score < 25:
+            return 5
         elif self.score < 28:
             return 6
         elif self.score < 32:
@@ -373,6 +375,7 @@ class SkillAssessment:
             2: "Act II: The Tome of Collections - Data structures",
             3: "Act III: The Branching Paths - Control flow",
             4: "Act IV: The Art of Incantations - Functions",
+            5: "Act V: The Ancient Scrolls - Files and I/O",
             6: "Act VI: The Living Constructs - OOP",
             7: "Act VII: The Grand Algorithm - Algorithms",
             8: "Act VIII: The Forge of Mastery - Professional skills"
@@ -456,7 +459,7 @@ class GameProgress:
     def save_progress(self):
         '''Save progress'''
         session_time = time.time() - self.session_start
-        self.time_played += session_time
+        self.time_played = round(self.time_played + session_time, 2)
         self.session_start = time.time()
 
         data = {
@@ -497,9 +500,6 @@ class GameProgress:
 
             if self.preferences.get('auto_save', True):
                 self.save_progress()
-                print(f"\n[AUTO-SAVE] +{score} XP, +5 Rep")
-                print(f"            Total: {self.total_score} XP, {self.reputation} Rep")
-                print(f"            Rank: {self.hero_rank}")
 
     def skip_lesson(self, lesson_id: str):
         '''Mark lesson skipped'''
@@ -4458,7 +4458,8 @@ to command. Continue your training - greater power awaits!"
 [LESSON COMPLETE - Strings Mastered! +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'A'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -5052,7 +5053,8 @@ The scrolls of text bend to your will. You are ready for greater challenges!"
 [LESSON COMPLETE - String Methods Mastered! +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'A', q2 == 'B', q3 == 'A', q4 == 'D'])
+        return _correct >= 3
 
 
 # ============================================================================
@@ -5582,7 +5584,8 @@ Your code can now listen and speak. Well done, young druid!"
 [LESSON COMPLETE - Input/Output Mastered! +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -6128,7 +6131,8 @@ Remember: Future you will read this code. Be kind to them. Comment wisely.
 [LESSON COMPLETE - Comments Mastered! +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'A', q4 == 'B'])
+        return _correct >= 3
 
 
 # ============================================================================
@@ -6419,7 +6423,8 @@ Elder Willowbyte smiles.
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -6678,7 +6683,8 @@ Question 3: What does 10 >= 10 return?
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'A'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -7072,7 +7078,8 @@ Question 3: What does bool("False") return?
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'A', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -7464,7 +7471,8 @@ Question 3: What makes f-strings better than + concatenation?
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'D'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -7875,7 +7883,8 @@ Question 3: What's the value of math.pi (approximately)?
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -8298,7 +8307,8 @@ Question 3: What does random.shuffle(list) return?
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -8710,7 +8720,8 @@ Question 3: Which is MORE Pythonic?
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -9213,7 +9224,8 @@ ACT I: THE FOUNDATIONS - COMPLETE!"
 [TITLE EARNED: Initiate of the Verdant Code]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 # Total expected: ~6000-7000 lines for complete file
 
@@ -9657,7 +9669,8 @@ as a worthy student of the Scrolls of Order!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -10129,7 +10142,8 @@ Question 3: What does sort() return?
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -10584,7 +10598,8 @@ Question 3: Which will cause an IndexError?
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'D'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -11056,7 +11071,8 @@ Question 3: What does [::-1] do?
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -11527,7 +11543,8 @@ Question 3: Which is better style?
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -11976,7 +11993,8 @@ Question 3: Which is better for storing coordinates?
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -12466,7 +12484,8 @@ Question 3: How many values can you unpack from (1, 2, 3)?
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -12934,7 +12953,8 @@ Question 3: Can you do my_set[0]?
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -13438,7 +13458,8 @@ Question 3: Which operation gives you ALL items from both sets?
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -14092,7 +14113,8 @@ Question 3: What does user = {} create?
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -14751,7 +14773,8 @@ Question 3: What happens with dict1.update(dict2)?
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -15257,7 +15280,8 @@ make decisions, control flow, and bring your programs to life!"
 [NEW TITLE: Keeper of the Tome]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 class NestedStructuresLesson(Lesson):
     '''Lesson 2.13: Nested Data Structures - FULLY IMPLEMENTED'''
@@ -15946,7 +15970,8 @@ complex application state!"
 [ACHIEVEMENT: Labyrinth Navigator]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -16567,7 +16592,8 @@ manipulation is now yours to command!"
 [ACHIEVEMENT: Master Scribe]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'C', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -17181,36 +17207,14 @@ you in every project - from simple scripts to complex applications!"
 [LESSONS 2.13-2.15 COMPLETE!]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'A', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
 # LESSONS 2.13-2.15 COMPLETE
 # ============================================================================
 
-print("""
-═══════════════════════════════════════════════════════════════════════════
-                    LESSONS 2.13-2.15 COMPLETE
-                    SYNTAX VERIFIED AND READY
-═══════════════════════════════════════════════════════════════════════════
-
-✓ 2.13 - Nested Data Structures (NestedStructuresLesson)
-✓ 2.14 - Advanced String Operations (StringAdvancedLesson)
-✓ 2.15 - String Formatting (StringFormattingLesson)
-
-Each lesson:
-  - 400-600 lines comprehensive content
-  - Elder Willowbyte storyline integration
-  - Complete __init__ with 5 key concepts, pitfalls, best practices, real-world apps
-  - Comprehensive teach() method with 10-15 detailed examples
-  - Interactive challenge() with 3 questions
-  - Proper Lesson class inheritance
-  - PEP 8 compliant
-  - Syntax verified
-
-Ready for integration into main.py!
-═══════════════════════════════════════════════════════════════════════════
-""")
 
 
 class StringSlicingLesson(Lesson):
@@ -17679,7 +17683,8 @@ dissection!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'D'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -18198,7 +18203,8 @@ knowledge will prevent countless bugs in your future code!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -18770,7 +18776,8 @@ This wisdom will serve you well!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 class EnumerateZipLesson(Lesson):
@@ -19349,7 +19356,8 @@ will be clean, readable, and elegant!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -19898,7 +19906,8 @@ values with elegance!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'A', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -20683,7 +20692,8 @@ You're well on your way to becoming a true Python master!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 class SortingLesson(Lesson):
@@ -21163,7 +21173,8 @@ chaos through your understanding!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -21618,7 +21629,8 @@ recognizes you as a true adept!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'A'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -22196,7 +22208,8 @@ Total XP Gained This Lesson: 60 XP!
 
         input()  # Wait for player to read the celebration
 
-        return True
+        _correct = sum([q1 == 'A', q2 == 'B', q3 == 'D'])
+        return _correct >= 2
 
 
 
@@ -22788,7 +22801,8 @@ mastered, you're ready to make real decisions in your code!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -23407,7 +23421,8 @@ beginning of true program logic!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -24019,32 +24034,14 @@ This is true wisdom: considering all possibilities!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'A'])
+        return _correct >= 2
 
 
 # ============================================================================
 # END OF ACT III LESSONS 3.1-3.3
 # ============================================================================
 
-print("""
-═══════════════════════════════════════════════════════════════════════════
-ACT III - THE BRANCHING PATHS
-LESSONS 3.1-3.3 COMPLETE
-═══════════════════════════════════════════════════════════════════════════
-
-✓ Lesson 3.1: Boolean Logic - The Path of Truth
-✓ Lesson 3.2: If Statement - The First Fork
-✓ Lesson 3.3: Else Statement - The Alternative Path
-
-All lessons ready for integration into main game file.
-
-Total: 1,800+ lines of comprehensive, syntax-verified educational content
-following PEP 8 and PEP 20 standards.
-
-Elder Willowbyte's guidance continues as Grixle learns the art of decision-
-making in programming through engaging, game-themed examples and challenges.
-═══════════════════════════════════════════════════════════════════════════
-""")
 
 
 class ElifStatementLesson(Lesson):
@@ -24693,7 +24690,8 @@ statements (all can execute). You're ready for even more complex logic!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'D', q3 == 'D'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -25307,7 +25305,8 @@ With these tools, you can build any logical expression your code requires!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -25907,38 +25906,14 @@ the mark of a true master!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'C', q3 == 'A'])
+        return _correct >= 2
 
 
 # ============================================================================
 # SYNTAX VERIFICATION
 # ============================================================================
 
-if __name__ == "__main__":
-    import ast
-
-    print("=" * 70)
-    print("VERIFYING SYNTAX FOR ACT III LESSONS 3.4-3.6")
-    print("=" * 70)
-
-    try:
-        with open(__file__, 'r', encoding='utf-8') as f:
-            source_code = f.read()
-
-        ast.parse(source_code)
-        print("\n✓ SYNTAX VERIFIED: All lessons are syntactically correct!")
-        print("\nLessons included:")
-        print("  - Lesson 3.4: ElifStatementLesson (The Many Paths)")
-        print("  - Lesson 3.5: LogicalOperatorsLesson (The Combiners)")
-        print("  - Lesson 3.6: ComparisonAdvancedLesson (Advanced Comparisons)")
-        print("\nAll lessons are ready for integration into main.py")
-        print("=" * 70)
-
-    except SyntaxError as e:
-        print(f"\n✗ SYNTAX ERROR FOUND:")
-        print(f"  Line {e.lineno}: {e.msg}")
-        print(f"  {e.text}")
-        print("=" * 70)
 
 
 class MembershipLesson(Lesson):
@@ -26572,7 +26547,8 @@ These operators make your code cleaner and more Pythonic. Use them well!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'A', q2 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -27176,7 +27152,8 @@ Python works!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -27912,38 +27889,14 @@ Python program you write!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
 # SYNTAX VERIFICATION
 # ============================================================================
 
-if __name__ == "__main__":
-    import ast
-
-    print("=" * 70)
-    print("VERIFYING SYNTAX FOR ACT III LESSONS 3.7-3.9")
-    print("=" * 70)
-
-    try:
-        with open(__file__, 'r', encoding='utf-8') as f:
-            source_code = f.read()
-
-        ast.parse(source_code)
-        print("\n✓ SYNTAX VERIFIED: All lessons are syntactically correct!")
-        print("\nLessons included:")
-        print("  - Lesson 3.7: MembershipLesson (The Seeker)")
-        print("  - Lesson 3.8: IdentityLesson (The Same or Different)")
-        print("  - Lesson 3.9: ForLoopsLesson (The Repeating Path)")
-        print("\nAll lessons are ready for integration into main.py")
-        print("=" * 70)
-
-    except SyntaxError as e:
-        print(f"\n✗ SYNTAX ERROR FOUND:")
-        print(f"  Line {e.lineno}: {e.msg}")
-        print(f"  {e.text}")
-        print("=" * 70)
 
 
 class RangeFunctionLesson(Lesson):
@@ -28719,7 +28672,8 @@ efficient, elegant code."
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'A', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -29405,7 +29359,8 @@ more versatile programmer!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -30172,38 +30127,14 @@ range(), you can handle any iteration challenge Python presents!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'C', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
 # SYNTAX VERIFICATION
 # ============================================================================
 
-if __name__ == "__main__":
-    import ast
-
-    print("=" * 70)
-    print("VERIFYING SYNTAX FOR ACT III LESSONS 3.10-3.12")
-    print("=" * 70)
-
-    try:
-        with open(__file__, 'r', encoding='utf-8') as f:
-            source_code = f.read()
-
-        ast.parse(source_code)
-        print("\n✓ SYNTAX VERIFIED: All lessons are syntactically correct!")
-        print("\nLessons included:")
-        print("  - Lesson 3.10: RangeFunctionLesson (The Number Sequences)")
-        print("  - Lesson 3.11: WhileLoopsLesson (The Conditional Repeat)")
-        print("  - Lesson 3.12: BreakStatementLesson (The Early Exit)")
-        print("\nAll lessons are ready for integration into main.py")
-        print("=" * 70)
-
-    except SyntaxError as e:
-        print(f"\n✗ SYNTAX ERROR FOUND:")
-        print(f"  Line {e.lineno}: {e.msg}")
-        print(f"  {e.text}")
-        print("=" * 70)
 
 
 class ContinueStatementLesson(Lesson):
@@ -31049,7 +30980,8 @@ process what you do. This makes your loops cleaner and more efficient!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -31809,7 +31741,8 @@ sets you apart from programmers of other languages!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -32655,38 +32588,14 @@ are now a master of Python's iteration mechanisms!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'D', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
 # SYNTAX VERIFICATION
 # ============================================================================
 
-if __name__ == "__main__":
-    import ast
-
-    print("=" * 70)
-    print("VERIFYING SYNTAX FOR ACT III LESSONS 3.13-3.15")
-    print("=" * 70)
-
-    try:
-        with open(__file__, 'r', encoding='utf-8') as f:
-            source_code = f.read()
-
-        ast.parse(source_code)
-        print("\n[OK] SYNTAX VERIFIED: All lessons are syntactically correct!")
-        print("\nLessons included:")
-        print("  - Lesson 3.13: ContinueStatementLesson (The Skip)")
-        print("  - Lesson 3.14: ElseLoopsLesson (The Completion Check)")
-        print("  - Lesson 3.15: NestedLoopsLesson (The Maze Within)")
-        print("\nAll lessons are ready for integration into main.py")
-        print("=" * 70)
-
-    except SyntaxError as e:
-        print(f"\n[ERROR] SYNTAX ERROR FOUND:")
-        print(f"  Line {e.lineno}: {e.msg}")
-        print(f"  {e.text}")
-        print("=" * 70)
 
 
 class TernaryOperatorLesson(Lesson):
@@ -33284,7 +33193,8 @@ is the mark of a mature programmer!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -33993,7 +33903,8 @@ capabilities!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -34787,7 +34698,8 @@ here!' This pattern literacy is fundamental to programming expertise!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'D', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -35618,40 +35530,14 @@ makes elegant decisions, handles data robustly, and flows with purpose!"
                     🌟 READY FOR ACT IV: FUNCTIONS 🌟
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
 # SYNTAX VERIFICATION
 # ============================================================================
 
-if __name__ == "__main__":
-    import ast
-
-    print("=" * 70)
-    print("VERIFYING SYNTAX FOR ACT III LESSONS 3.16-3.19 FINAL")
-    print("=" * 70)
-
-    try:
-        with open(__file__, 'r', encoding='utf-8') as f:
-            source_code = f.read()
-
-        ast.parse(source_code)
-        print("\n[OK] SYNTAX VERIFIED: All lessons are syntactically correct!")
-        print("\nLessons included:")
-        print("  - Lesson 3.16: TernaryOperatorLesson (The Quick Choice)")
-        print("  - Lesson 3.17: MatchStatementLesson (The Pattern Matcher)")
-        print("  - Lesson 3.18: LoopPatternsLesson (The Common Paths)")
-        print("  - Lesson 3.19: InputValidationLesson (The Gatekeeper) [FINAL!]")
-        print("\n[!] LESSON 3.19 INCLUDES ACT III COMPLETION CELEBRATION! [!]")
-        print("\nAll lessons are ready for integration into main.py")
-        print("=" * 70)
-
-    except SyntaxError as e:
-        print(f"\n[ERROR] SYNTAX ERROR FOUND:")
-        print(f"  Line {e.lineno}: {e.msg}")
-        print(f"  {e.text}")
-        print("=" * 70)
 
 
 
@@ -36422,7 +36308,8 @@ is just the beginning of your journey into the Art of Incantations!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -37081,7 +36968,8 @@ Your functions can now adapt to any situation. This is true magical flexibility!
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -37807,32 +37695,14 @@ your studies, young druid!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
 # END OF ACT IV LESSONS 4.1-4.3
 # ============================================================================
 
-print("""
-═══════════════════════════════════════════════════════════════════════════
-ACT IV - THE ART OF INCANTATIONS
-LESSONS 4.1-4.3 COMPLETE
-═══════════════════════════════════════════════════════════════════════════
-
-✓ Lesson 4.1: Function Basics - The First Incantation
-✓ Lesson 4.2: Parameters - The Ingredients
-✓ Lesson 4.3: Return Values - The Result
-
-All lessons ready for integration into main game file.
-
-Total: 1,800+ lines of comprehensive, syntax-verified educational content
-following PEP 8 and PEP 20 standards.
-
-Elder Willowbyte's guidance continues as Grixle learns the Art of Incantations
-through engaging, game-themed examples and challenges.
-═══════════════════════════════════════════════════════════════════════════
-""")
 
 
 
@@ -38519,7 +38389,8 @@ your incantations will serve you well!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -39199,7 +39070,8 @@ readable, and maintainable. The Named Ingredients are yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -39925,32 +39797,14 @@ wisely!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
 # END OF ACT IV LESSONS 4.4-4.6
 # ============================================================================
 
-print("""
-═══════════════════════════════════════════════════════════════════════════
-ACT IV - THE ART OF INCANTATIONS
-LESSONS 4.4-4.6 COMPLETE
-═══════════════════════════════════════════════════════════════════════════
-
-✓ Lesson 4.4: Default Parameters - The Standard Ingredients
-✓ Lesson 4.5: Keyword Arguments - The Named Ingredients
-✓ Lesson 4.6: *args and **kwargs - The Variable Ingredients
-
-All lessons ready for integration into main game file.
-
-Total: 1,800+ lines of comprehensive, syntax-verified educational content
-following PEP 8 and PEP 20 standards.
-
-Elder Willowbyte's guidance continues as Grixle masters advanced function
-techniques through engaging, game-themed examples and challenges.
-═══════════════════════════════════════════════════════════════════════════
-""")
 
 
 
@@ -40852,7 +40706,8 @@ professional, and self-documenting. The Tome of Knowledge is yours!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -41618,7 +41473,8 @@ The Boundaries of Magic are yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'A'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -42340,33 +42196,14 @@ The Swift Spells are yours to command, young Syntax Sage!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
 # END OF ACT IV LESSONS 4.7-4.9
 # ============================================================================
 
-print("""
-═══════════════════════════════════════════════════════════════════════════
-ACT IV - THE ART OF INCANTATIONS
-LESSONS 4.7-4.9 COMPLETE
-═══════════════════════════════════════════════════════════════════════════
-
-✓ Lesson 4.7: Docstrings - The Tome of Knowledge
-✓ Lesson 4.8: Scope - The Boundaries of Magic
-✓ Lesson 4.9: Lambda Functions - Swift Spells
-
-All lessons ready for integration into main game file.
-
-Total: 2,100+ lines of comprehensive, syntax-verified educational content
-following PEP 8 and PEP 20 standards.
-
-Elder Willowbyte's guidance continues as Grixle masters advanced function
-documentation, variable scope, and lambda expressions through engaging,
-game-themed examples and challenges.
-═══════════════════════════════════════════════════════════════════════════
-""")
 
 
 
@@ -43292,7 +43129,8 @@ The power of Spells Upon Spells is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -44032,7 +43870,8 @@ The Mirror Chamber reveals its secrets to you!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -44965,33 +44804,14 @@ You have completed Act IV - The Art of Incantations!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
 # END OF ACT IV LESSONS 4.10-4.12
 # ============================================================================
 
-print("""
-═══════════════════════════════════════════════════════════════════════════
-ACT IV - THE ART OF INCANTATIONS
-LESSONS 4.10-4.12 COMPLETE
-═══════════════════════════════════════════════════════════════════════════
-
-✓ Lesson 4.10: Higher-Order Functions - Spells Upon Spells
-✓ Lesson 4.11: Recursion - The Mirror Chamber
-✓ Lesson 4.12: Decorator Basics - Enchanting Enchantments
-
-All lessons ready for integration into main game file.
-
-Total: 2,100+ lines of comprehensive, syntax-verified educational content
-following PEP 8 and PEP 20 standards.
-
-Elder Willowbyte's guidance continues as Grixle masters higher-order
-functions, recursive problem-solving, and the powerful decorator pattern
-through engaging, game-themed examples and challenges.
-═══════════════════════════════════════════════════════════════════════════
-""")
 
 
 
@@ -45934,7 +45754,8 @@ The power of Sealed Scrolls is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -46723,7 +46544,8 @@ The power of Immaculate Magic is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -47544,38 +47366,14 @@ Well done, Function Master Grixle. WELL DONE!"
 [ACT IV COMPLETE - FUNCTION MASTER TITLE EARNED]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
 # END OF ACT IV LESSONS 4.13-4.15 (FINALE)
 # ============================================================================
 
-print("""
-═══════════════════════════════════════════════════════════════════════════
-ACT IV - THE ART OF INCANTATIONS
-LESSONS 4.13-4.15 (FINALE) COMPLETE
-═══════════════════════════════════════════════════════════════════════════
-
-✓ Lesson 4.13: Closures - Sealed Scrolls
-✓ Lesson 4.14: Pure Functions - Immaculate Magic
-✓ Lesson 4.15: Type Hints - The Codex of Types (ACT IV FINALE)
-
-All lessons ready for integration into main game file.
-
-Total: 2,400+ lines of comprehensive, syntax-verified educational content
-following PEP 8 and PEP 20 standards.
-
-Lesson 4.15 is an epic 900+ line FINALE with Elder Willowbyte's ultimate
-wisdom, celebration of all 15 Act IV lessons, and teaser for Act V.
-
-Elder Willowbyte's guidance reaches its zenith as Grixle completes the
-journey from function novice to Function Master through engaging,
-game-themed examples and a triumphant finale celebration.
-
-ACT IV COMPLETE - ALL 15 LESSONS DELIVERED!
-═══════════════════════════════════════════════════════════════════════════
-""")
 
 
 
@@ -48385,7 +48183,8 @@ The power of the First Scroll is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -49110,7 +48909,8 @@ The power of Inscribing Knowledge is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -49853,35 +49653,14 @@ The power of the Safe Seal is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
 # END OF ACT V LESSONS 5.1-5.3
 # ============================================================================
 
-print("""
-═══════════════════════════════════════════════════════════════════════════
-ACT V - THE ANCIENT SCROLLS
-LESSONS 5.1-5.3 COMPLETE
-═══════════════════════════════════════════════════════════════════════════
-
-✓ Lesson 5.1: File Basics - The First Scroll
-✓ Lesson 5.2: Writing Files - Inscribing Knowledge
-✓ Lesson 5.3: Context Managers - The Safe Seal
-
-All lessons ready for integration into main game file.
-
-Total: 2,100+ lines of comprehensive, syntax-verified educational content
-following PEP 8 and PEP 20 standards.
-
-Elder Willowbyte guides Grixle through the foundations of file I/O - reading,
-writing, and the safe practices of context managers. Each lesson features
-game-themed examples, comprehensive coverage, and interactive challenges.
-
-The Ancient Scrolls await - the journey into persistence has begun!
-═══════════════════════════════════════════════════════════════════════════
-""")
 
 
 
@@ -50706,7 +50485,8 @@ The power of the Tables of Lore is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -51509,7 +51289,8 @@ The power of the Structured Scrolls is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'D', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -52316,36 +52097,14 @@ The power of The Path of Navigation is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
 # END OF ACT V LESSONS 5.4-5.6
 # ============================================================================
 
-print("""
-═══════════════════════════════════════════════════════════════════════════
-ACT V - THE ANCIENT SCROLLS
-LESSONS 5.4-5.6 COMPLETE
-═══════════════════════════════════════════════════════════════════════════
-
-✓ Lesson 5.4: CSV Files - Tables of Lore
-✓ Lesson 5.5: JSON Files - Structured Scrolls
-✓ Lesson 5.6: PathLib - The Path of Navigation
-
-All lessons ready for integration into main game file.
-
-Total: 2,100+ lines of comprehensive, syntax-verified educational content
-following PEP 8 and PEP 20 standards.
-
-Elder Willowbyte guides Grixle through advanced file handling - CSV for
-tabular data, JSON for complex structures, and pathlib for modern path
-handling. Each lesson features game-themed examples, comprehensive coverage,
-and interactive challenges.
-
-The Ancient Scrolls continue - mastery of data persistence grows!
-═══════════════════════════════════════════════════════════════════════════
-""")
 
 
 
@@ -53223,7 +52982,8 @@ The power of resilient error handling is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -54151,7 +53911,8 @@ The power of complete exception handling is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -54960,36 +54721,14 @@ The power of signaling danger is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
 # END OF ACT V LESSONS 5.7-5.9
 # ============================================================================
 
-print("""
-═══════════════════════════════════════════════════════════════════════════
-ACT V - THE ANCIENT SCROLLS
-LESSONS 5.7-5.9 COMPLETE
-═══════════════════════════════════════════════════════════════════════════
-
-✓ Lesson 5.7: Exception Basics - When Scrolls Tear
-✓ Lesson 5.8: Exception Handling - Mending the Tears
-✓ Lesson 5.9: Raising Exceptions - Signaling Danger
-
-All lessons ready for integration into main game file.
-
-Total: 2,100+ lines of comprehensive, syntax-verified educational content
-following PEP 8 and PEP 20 standards.
-
-Elder Willowbyte guides Grixle through exception handling - catching errors
-gracefully, using else and finally for complete control, and raising
-exceptions to signal danger. Each lesson features game-themed examples,
-comprehensive coverage, and interactive challenges.
-
-The Ancient Scrolls continue - mastery of error resilience achieved!
-═══════════════════════════════════════════════════════════════════════════
-""")
 
 
 
@@ -56038,7 +55777,8 @@ The power of organized code is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -57216,7 +56956,8 @@ The power of module creation is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'A', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -58254,36 +57995,14 @@ The power of the great archive is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'D', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
 # END OF ACT V LESSONS 5.10-5.12
 # ============================================================================
 
-print("""
-═══════════════════════════════════════════════════════════════════════════
-ACT V - THE ANCIENT SCROLLS
-LESSONS 5.10-5.12 COMPLETE
-═══════════════════════════════════════════════════════════════════════════
-
-✓ Lesson 5.10: Modules Basics - The Library System
-✓ Lesson 5.11: Creating Modules - Writing Your Own Scrolls
-✓ Lesson 5.12: Packages - The Great Archive
-
-All lessons ready for integration into main game file.
-
-Total: 2,100+ lines of comprehensive, syntax-verified educational content
-following PEP 8 and PEP 20 standards.
-
-Elder Willowbyte guides Grixle through Python's module system - importing
-existing modules, creating custom modules, and organizing projects with
-packages. Each lesson features game-themed examples, comprehensive coverage,
-and interactive challenges.
-
-The Ancient Scrolls continue - mastery of code organization achieved!
-═══════════════════════════════════════════════════════════════════════════
-""")
 
 
 
@@ -59153,7 +58872,8 @@ packages!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -59765,7 +59485,8 @@ explore virtual environments!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -60470,7 +60191,8 @@ await!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'A', q3 == 'B'])
+        return _correct >= 2
 
 
 
@@ -61212,7 +60934,8 @@ Now let's explore how to navigate and organize the file system itself!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -61913,7 +61636,8 @@ Now, let's learn to ARCHITECT complete projects with professional structure!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -62697,7 +62421,8 @@ persistence system!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -63712,7 +63437,8 @@ CREATOR!"
 Congratulations! You are ready for Act VI: The Constructor's Forge!
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 
@@ -64725,7 +64451,8 @@ The power of The First Blueprint is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -65675,7 +65402,8 @@ The power of Individual Traits is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -66796,35 +66524,14 @@ The power of The Creature's Actions is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
 # END OF ACT VI LESSONS 6.1-6.3
 # ============================================================================
 
-print("""
-═══════════════════════════════════════════════════════════════════════════
-ACT VI - THE CONSTRUCTOR'S FORGE
-LESSONS 6.1-6.3 COMPLETE
-═══════════════════════════════════════════════════════════════════════════
-
-✓ Lesson 6.1: Class Basics - The First Blueprint
-✓ Lesson 6.2: Instance Attributes - Individual Traits
-✓ Lesson 6.3: Instance Methods - The Creature's Actions
-
-All lessons ready for integration into main game file.
-
-Total: 2,200+ lines of comprehensive, syntax-verified educational content
-following PEP 8 and PEP 20 standards.
-
-Elder Willowbyte guides Grixle through the foundations of Object-Oriented
-Programming - classes, attributes, and methods. Each lesson features
-game-themed examples, comprehensive coverage, and interactive challenges.
-
-The Constructor's Forge awaits - the journey into OOP has begun!
-═══════════════════════════════════════════════════════════════════════════
-""")
 
 
 
@@ -67772,7 +67479,8 @@ The power of Shared Traits is yours!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -68629,7 +68337,8 @@ The power of Describing Creatures is yours!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -69717,7 +69426,8 @@ The power of Bloodlines is yours! The foundations of OOP are complete!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 
@@ -70631,7 +70341,8 @@ The power of Many Forms is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -71499,7 +71210,8 @@ The power of Hidden Mechanics is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -72326,7 +72038,8 @@ The power of Controlled Access is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 
@@ -75067,28 +74780,6 @@ Elder Willowbyte {'beams with pride' if score >= 2 else 'smiles encouragingly'}.
 # END OF ACT VI LESSONS 6.10-6.12
 # ============================================================================
 
-print("""
-═══════════════════════════════════════════════════════════════════════════
-ACT VI - THE CONSTRUCTOR'S FORGE
-LESSONS 6.10-6.12 COMPLETE
-═══════════════════════════════════════════════════════════════════════════
-
-✓ Lesson 6.10: Special Methods - Magic Runes
-✓ Lesson 6.11: Operator Overloading - Redefining Symbols
-✓ Lesson 6.12: Context Managers - Resource Guardians
-
-All lessons ready for integration into main game file.
-
-Total: ~2,100 lines of comprehensive, syntax-verified educational content
-following PEP 8 and PEP 20 standards.
-
-Elder Willowbyte guides Grixle through advanced OOP - special methods that
-make classes behave like built-ins, operator overloading for natural syntax,
-and context managers for safe resource handling.
-
-The Constructor's Forge burns bright - master these advanced techniques!
-═══════════════════════════════════════════════════════════════════════════
-""")
 
 
 
@@ -75854,7 +75545,8 @@ The power of Building Blocks is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -76659,7 +76351,8 @@ The power of The Perfect Template is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -77442,7 +77135,8 @@ The power of Class-Level Powers is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 
@@ -78285,7 +77979,8 @@ The power of Streamlined Blueprints is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -79091,35 +78786,14 @@ The power of Immutable Records is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
 # END OF ACT VI LESSONS 6.16-6.17
 # ============================================================================
 
-print("""
-═══════════════════════════════════════════════════════════════════════════
-ACT VI - THE CONSTRUCTOR'S FORGE
-LESSONS 6.16-6.17 COMPLETE
-═══════════════════════════════════════════════════════════════════════════
-
-✓ Lesson 6.16: Dataclasses - Streamlined Blueprints
-✓ Lesson 6.17: NamedTuple - Immutable Records
-
-All lessons ready for integration into main game file.
-
-Total: 1,400+ lines of comprehensive, syntax-verified educational content
-following PEP 8 and PEP 20 standards.
-
-Elder Willowbyte guides Grixle through advanced data structures - dataclasses
-that auto-generate methods and NamedTuples that provide immutable, named
-records. Each lesson features game-themed examples, comprehensive coverage,
-and interactive challenges.
-
-The Constructor's Forge continues - mastering the tools of modern Python!
-═══════════════════════════════════════════════════════════════════════════
-""")
 
 
 class SlotsLesson(Lesson):
@@ -79795,7 +79469,8 @@ You have earned +10 XP and the title: OPTIMIZER!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'A', q4 == 'B'])
+        return _correct >= 3
 
 
 # End of lesson
@@ -80602,7 +80277,8 @@ ONE FINAL CHALLENGE awaits - the OOP FINALE!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'D', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -81614,7 +81290,8 @@ Elder Willowbyte bows deeply - the highest honor.
 May the forge's wisdom guide you forever!
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B', q4 == 'B', q5 == 'C'])
+        return _correct >= 3
 
 
 
@@ -82264,7 +81941,8 @@ The power of The First Hunt is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -83020,7 +82698,8 @@ The power of Divide and Conquer is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 class BubbleSortLesson(Lesson):
@@ -83655,7 +83334,8 @@ The power of sorting is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -84300,7 +83980,8 @@ The power of methodical selection is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 
@@ -84901,7 +84582,8 @@ The power of Building Order is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -85495,7 +85177,8 @@ The power of algorithms is yours to command!"
 [ACT VII COMPLETE +50 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 
@@ -86144,7 +85827,8 @@ The power of Divide and Merge is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -86770,7 +86454,8 @@ algorithmic masters!"
 [LESSON COMPLETE +15 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'A'])
+        return _correct >= 2
 
 
 
@@ -87421,7 +87106,8 @@ The power of self-reference is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -88037,7 +87723,8 @@ knowledge wisely!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 
@@ -88697,7 +88384,8 @@ The power of greedy optimization is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'A'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -89632,7 +89320,8 @@ The journey continues..."
 [ACT VII COMPLETE - MASTER STRATEGIST TITLE EARNED]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 
@@ -90323,7 +90012,8 @@ The vault of all code is now open to you!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -90944,7 +90634,8 @@ The sacred knowledge of The Professional's Forge is now complete within you!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 
@@ -91693,7 +91384,8 @@ The power of GitHub is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'A', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -92481,7 +92173,8 @@ The power of isolated workspaces is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -93211,7 +92904,8 @@ The power of automated testing is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -94146,7 +93840,8 @@ The power of the Professional's Forge is YOURS!"
 [ACT VIII COMPLETE!]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'C'])
+        return _correct >= 2
 
 
 
@@ -94890,7 +94585,8 @@ debugging effectively. The power of debugging is yours!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -95584,7 +95280,8 @@ inspect state, and understand exactly what your code does!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -96295,7 +95992,8 @@ practices! You can create professional logging systems!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -97008,7 +96706,8 @@ You have mastered:
 The marks of a true programming MASTER!
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 
@@ -97840,7 +97539,8 @@ The power of The Quality Crucible is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'A'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -98745,7 +98445,8 @@ The power of The Eternal Library is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -99580,7 +99281,8 @@ The power of The Type Lattice is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -100261,7 +99963,8 @@ The power of The Distribution Forge is yours to command!"
 [ACT VIII COMPLETE!]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 
@@ -101206,7 +100909,8 @@ The power of measurement is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -101927,7 +101631,8 @@ The power of peer review is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -102790,7 +102495,8 @@ The power of continuous improvement is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -103631,7 +103337,8 @@ The power of proven solutions is yours to command!"
 [ACT VIII COMPLETE - THE CODE FORGE MASTERED!]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 
@@ -104330,7 +104037,8 @@ The ancient art of Pattern Matching is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -105066,7 +104774,8 @@ The power of Argument Parsing is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'D', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -105878,7 +105587,8 @@ The power of Configuration Management is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'D', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -106631,7 +106341,8 @@ The ancient art of Parallel Processing is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 
@@ -107563,7 +107274,8 @@ The power of concurrent execution is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -108326,7 +108038,8 @@ The future of Python concurrency is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -109143,7 +108856,8 @@ The power of persistence is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'C'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -109931,7 +109645,8 @@ You have achieved TRUE PYTHON MASTERY! Go forth and build AMAZING games!"
 [TITLE EARNED: Python Master]
         """)
 
-        return True
+        _correct = sum([q1 == 'C', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 
@@ -110660,7 +110375,8 @@ and efficiently from any website! The power of data extraction is yours!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'A', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -111372,7 +111088,8 @@ with Python! The web development power is yours to command!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -112083,7 +111800,8 @@ organized like a true software engineer! The power of organization is yours!"
 [LESSON COMPLETE +10 XP]
         """)
 
-        return True
+        _correct = sum([q1 == 'B', q2 == 'C', q3 == 'B'])
+        return _correct >= 2
 
 
 # ============================================================================
@@ -123478,13 +123196,33 @@ def main_menu():
             story = StoryMode(progress)
             story.view_progress()
         elif choice == '5':
-            print("\n[Settings...]")
-            input("[Press Enter...]")
+            while True:
+                p = progress.preferences
+                print("\n" + "=" * 70)
+                print("  SETTINGS")
+                print("=" * 70)
+                print(f"  1. Show hints:     {'ON' if p.get('show_hints', True) else 'OFF'}")
+                print(f"  2. Auto-save:      {'ON' if p.get('auto_save', True) else 'OFF'}")
+                print(f"  3. Allow skipping: {'ON' if p.get('skip_enabled', True) else 'OFF'}")
+                print("  4. Back")
+                print()
+                sett = input("Toggle (1-4): ").strip()
+                if sett == '1':
+                    p['show_hints'] = not p.get('show_hints', True)
+                elif sett == '2':
+                    p['auto_save'] = not p.get('auto_save', True)
+                elif sett == '3':
+                    p['skip_enabled'] = not p.get('skip_enabled', True)
+                elif sett == '4':
+                    progress.save_progress()
+                    break
+                else:
+                    print("\n⚠ Invalid choice")
         elif choice == '6':
             print("\n" + "=" * 70)
             print("  CREDITS")
             print("=" * 70)
-            print("\nThe Verdant Code v2.1.6 Complete")
+            print(f"\nThe Verdant Code v{VERSION} Complete")
             print("Created by: Danny (Cesium) P.")
             print("\nA complete Python learning adventure")
             print("From novice to Mythic Hero")
@@ -123514,7 +123252,7 @@ def main():
 
         main_menu()
 
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, EOFError):
         print("\n\n⚠ Quest interrupted. Progress saved.")
         print("Return when ready, hero.")
     except Exception as e:
