@@ -932,63 +932,55 @@ hero Fraylon needs?"
         """)
 
     def challenge(self) -> bool:
+        """Graded knowledge check (auto-generated quiz)."""
         print("""
 ===========================================================================
-                          REFLECTION CHALLENGE
+Elder Willowbyte tests your understanding of the Language of Nature.
 ===========================================================================
-
-Before we continue, reflect deeply on your motivation.
-
-Question: What excites you MOST about learning Python?
-
-  1. Building web applications and APIs
-  2. Data science, AI, and machine learning
-  3. Automation and making life easier
-  4. Creating games and art
-  5. Getting a high-paying tech job
-  6. Scientific research and discovery
-  7. Cybersecurity and ethical hacking
-  8. Pure curiosity and love of learning
-        """)
-
-        response = input("\nYour answer (1-8): ").strip()
-
-        responses = {
-            '1': "Excellent! You'll master Flask, Django, and FastAPI!",
-            '2': "Wonderful! pandas, NumPy, scikit-learn, and PyTorch await!",
-            '3': "Practical! You'll save countless hours with clever scripts!",
-            '4': "Creative! Pygame and generative art are your canvas!",
-            '5': "Ambitious! We'll make you enterprise-ready!",
-            '6': "Noble! SciPy, Matplotlib, and Jupyter are powerful allies!",
-            '7': "Vigilant! You'll learn both offense and defense!",
-            '8': "Perfect mindset! Curiosity is the mark of great developers!"
-        }
-
-        print(f"\n{responses.get(response, 'Your passion will fuel your journey!')}")
+""")
         print("""
-+=======================================================================+
-|                                                                       |
-|  REMEMBER:                                                            |
-|                                                                       |
-|  • Every line of code you write is PROGRESS                           |
-|  • Every error you encounter is a LESSON                              |
-|  • Every program you build is PROOF of your growing power             |
-|  • Every challenge you overcome makes you STRONGER                    |
-|                                                                       |
-|  The grove of Fraylon stands ready. Elder Willowbyte believes in you.|
-|  The Iron Wyrm threatens, but you are the one who will stop it.      |
-|                                                                       |
-|  Your legendary journey begins NOW.                                   |
-|                                                                       |
-+=======================================================================+
+Question 1: What is Python?
 
-+10 XP - The Awakening Begins
-+5 Reputation - Elder Willowbyte is pleased
-New Title Unlocked: "Novice Druid"
-        """)
+  A) A kind of snake and nothing more
+  B) A high-level, human-readable programming language
+  C) A spreadsheet application
+  D) A web browser
+""")
+        q1 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q1 == 'B':
+            print("Correct! Python is a high-level, readable programming language.")
+        else:
+            print("Incorrect. Python is a high-level, readable programming language. Answer is B")
+        print("""
+Question 2: Why is Python well-suited to beginners?
 
-        input("\n[Press Enter to continue your destiny...]")
-        return True
+  A) It has no rules at all
+  B) Its syntax is clear and close to plain English
+  C) It only runs on supercomputers
+  D) It needs no logic
+""")
+        q2 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q2 == 'B':
+            print("Correct! Python's clear, readable syntax helps beginners.")
+        else:
+            print("Incorrect. Python's clear, readable syntax helps beginners. Answer is B")
+        print("""
+Question 3: What does it mean that Python is interpreted?
+
+  A) It paints pictures
+  B) It runs line-by-line without a separate compile step
+  C) It needs a human translator
+  D) It cannot run programs
+""")
+        q3 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q3 == 'B':
+            print("Correct! Interpreted code runs without a separate compile step.")
+        else:
+            print("Incorrect. Interpreted code runs without a separate compile step. Answer is B")
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        print(f"\nYou scored {_correct}/3 on this trial.")
+        input("\n[Press Enter to continue...]")
+        return _correct >= 2
 
 
 # Continue with ALL other lessons at this detail level...
@@ -1196,54 +1188,55 @@ Portal - what mortals call the 'terminal' or 'command prompt'."
         """)
 
     def challenge(self) -> bool:
+        """Graded knowledge check (auto-generated quiz)."""
         print("""
 ===========================================================================
-                        INSTALLATION CHALLENGE
+Prove you can summon Python onto any machine.
 ===========================================================================
+""")
+        print("""
+Question 1: Where should you download official Python?
 
-To prove Python is summoned, complete these steps:
-
-1. Open your terminal/command prompt
-2. Run: python --version (or python3 --version)
-3. Verify you see Python 3.8 or higher
-4. Open Python REPL: python (or python3)
-5. Type: print("Fraylon will be saved!")
-6. Exit Python: exit()
-
-Have you completed these steps successfully?
-        """)
-
-        response = input("(yes/later): ").strip().lower()
-
-        if response == 'yes':
-            print("""
-+=======================================================================+
-|                                                                       |
-|  ✓ EXCELLENT! PYTHON IS SUMMONED!                                    |
-|                                                                       |
-|  The Language of Nature now resides in your machine. You have        |
-|  completed the first ritual on your path to becoming a master.       |
-|                                                                       |
-|  +10 XP - Summoning Ritual Complete                                  |
-|  +5 Reputation - The Grove recognizes your dedication                |
-|  Achievement Unlocked: "First Ritual"                                |
-|                                                                       |
-+=======================================================================+
-        """)
+  A) A random forum
+  B) python.org
+  C) It is built into Microsoft Word
+  D) You cannot download it
+""")
+        q1 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q1 == 'B':
+            print("Correct! Always get Python from python.org.")
         else:
-            print("""
-That's okay! Return when Python is installed.
+            print("Incorrect. Always get Python from python.org. Answer is B")
+        print("""
+Question 2: Which command checks your installed Python version?
 
-Installation guides:
-  • Windows: https://www.python.org/downloads/windows/
-  • Mac: https://www.python.org/downloads/macos/
-  • Linux: Use your package manager
+  A) python --color
+  B) python --version
+  C) version python
+  D) py.check
+""")
+        q2 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q2 == 'B':
+            print("Correct! python --version reports the installed version.")
+        else:
+            print("Incorrect. python --version reports the installed version. Answer is B")
+        print("""
+Question 3: On Windows, what should you enable so python works anywhere?
 
-The grove will wait for your return, young druid.
-        """)
-
+  A) Add Python to PATH
+  B) Delete System32
+  C) Disable the firewall
+  D) Nothing is needed
+""")
+        q3 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q3 == 'A':
+            print("Correct! Adding Python to PATH makes it available in any terminal.")
+        else:
+            print("Incorrect. Adding Python to PATH makes it available in any terminal. Answer is A")
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'A'])
+        print(f"\nYou scored {_correct}/3 on this trial.")
         input("\n[Press Enter to continue...]")
-        return True
+        return _correct >= 2
 
 
 class TerminalBasicsLesson(Lesson):
@@ -1582,88 +1575,55 @@ The grove seems to hum with approval. You feel... more powerful somehow.
         """)
 
     def challenge(self) -> bool:
+        """Graded knowledge check (auto-generated quiz)."""
         print("""
 ===========================================================================
-                      TERMINAL NAVIGATION CHALLENGE
+Navigate the command-line caverns to prove your skill.
 ===========================================================================
+""")
+        print("""
+Question 1: Which command changes the current directory?
 
-Elder Willowbyte tests your knowledge:
-
-"Prove you understand the Command Portal. Answer these questions:"
-
-CHALLENGE QUESTIONS:
-
-1. What command shows your current directory?
-   (Answer in your mind, or try it in your real terminal!)
-
-2. What command lists files in your current directory?
-
-3. How do you go UP one directory level?
-
-4. How do you run a Python script called "spell.py"?
-
-5. What does "cd .." do?
-
-PRACTICAL CHALLENGE (TRY THIS NOW!):
-
-If you have a terminal open:
-  1. Open your terminal
-  2. Type: pwd (or cd on Windows)
-  3. Type: ls (or dir on Windows)
-  4. Create a test folder: mkdir TerminalTest
-  5. Enter it: cd TerminalTest
-  6. Confirm location: pwd (or cd)
-  7. Go back: cd ..
-
-Have you tried these commands, or do you understand the concepts?
-        """)
-
-        response = input("\n(yes/later): ").strip().lower()
-
-        if response == 'yes':
-            print("""
-+=======================================================================+
-|                                                                       |
-|  ✓ COMMAND PORTAL MASTERED!                                          |
-|                                                                       |
-|  You have conquered your fear of the terminal. The black void is     |
-|  no longer intimidating - it is your canvas for commanding Python!   |
-|                                                                       |
-|  Terminal commands learned:                                          |
-|    • pwd/cd - Know your location                                     |
-|    • ls/dir - Survey your surroundings                               |
-|    • cd folder_name - Navigate the realm                             |
-|    • mkdir - Create new territories                                  |
-|    • python script.py - Cast Python spells                           |
-|                                                                       |
-|  +10 XP - Command Portal Mastered                                    |
-|  +5 Reputation - Willowbyte is impressed                             |
-|  Achievement Unlocked: "Terminal Navigator"                          |
-|                                                                       |
-|  "The grove recognizes you as one who commands, not clicks."         |
-|                                                - Elder Willowbyte     |
-|                                                                       |
-+=======================================================================+
-        """)
+  A) cd
+  B) goto
+  C) teleport
+  D) jump
+""")
+        q1 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q1 == 'A':
+            print("Correct! cd changes directory.")
         else:
-            print("""
-The Command Portal remains open, waiting for your return.
+            print("Incorrect. cd changes directory. Answer is A")
+        print("""
+Question 2: What does pwd display on macOS/Linux?
 
-Practice these commands in your own terminal. Don't fear the black screen -
-it's just another way to talk to your computer!
+  A) Your password
+  B) The current working directory
+  C) The Python version
+  D) The weather
+""")
+        q2 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q2 == 'B':
+            print("Correct! pwd prints the working directory.")
+        else:
+            print("Incorrect. pwd prints the working directory. Answer is B")
+        print("""
+Question 3: How do you run a Python file from the terminal?
 
-Quick reference:
-  pwd/cd      - Where am I?
-  ls/dir      - What's here?
-  cd folder   - Go somewhere
-  cd ..       - Go back
-  mkdir name  - Create folder
-
-The grove will guide you when you're ready, young druid.
-        """)
-
+  A) run file.py
+  B) python file.py
+  C) open file.py
+  D) start->file
+""")
+        q3 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q3 == 'B':
+            print("Correct! python file.py executes the script.")
+        else:
+            print("Incorrect. python file.py executes the script. Answer is B")
+        _correct = sum([q1 == 'A', q2 == 'B', q3 == 'B'])
+        print(f"\nYou scored {_correct}/3 on this trial.")
         input("\n[Press Enter to continue...]")
-        return True
+        return _correct >= 2
 
 
 class TextEditorsLesson(Lesson):
@@ -1984,109 +1944,55 @@ The grove awaits your first TRUE spell - written by your own hand.
         """)
 
     def challenge(self) -> bool:
+        """Graded knowledge check (auto-generated quiz)."""
         print("""
 ===========================================================================
-                        EDITOR SELECTION CHALLENGE
+Choose your enchanted quill wisely, young coder.
 ===========================================================================
+""")
+        print("""
+Question 1: What file extension do Python files use?
 
-Elder Willowbyte awaits your choice:
+  A) .txt
+  B) .py
+  C) .python
+  D) .exe
+""")
+        q1 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q1 == 'B':
+            print("Correct! Python files end in .py.")
+        else:
+            print("Incorrect. Python files end in .py. Answer is B")
+        print("""
+Question 2: Which is a popular beginner-friendly Python editor/IDE?
 
-"Which Scribe's Tool calls to you?"
+  A) VS Code
+  B) Photoshop
+  C) A calculator
+  D) Paint
+""")
+        q2 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q2 == 'A':
+            print("Correct! VS Code is a popular, friendly editor.")
+        else:
+            print("Incorrect. VS Code is a popular, friendly editor. Answer is A")
+        print("""
+Question 3: What does syntax highlighting do?
 
-  1. VS Code (Recommended for beginners)
-  2. PyCharm (Powerful IDE)
-  3. IDLE (Simple and ready)
-  4. I'll decide later
-
-YOUR TASK:
-  1. Choose an editor (VS Code recommended)
-  2. Install it
-  3. Create a new file: test.py
-  4. Write: print("I chose my editor!")
-  5. Save the file
-  6. Verify you can see it in your file system
-
-Have you installed an editor and created a .py file?
-        """)
-
-        choice = input("\nWhich did you choose? (1/2/3/4): ").strip()
-
-        responses = {
-            '1': '''
-+=======================================================================+
-|                                                                       |
-|  ✓ EXCELLENT CHOICE! VS CODE SELECTED!                               |
-|                                                                       |
-|  You've chosen the path of the modern developer. VS Code will        |
-|  serve you well from beginner tutorials to professional projects.    |
-|                                                                       |
-|  Next steps:                                                          |
-|    1. Download from code.visualstudio.com                            |
-|    2. Install Python extension                                       |
-|    3. Create your first .py file                                     |
-|    4. Start coding!                                                   |
-|                                                                       |
-|  +10 XP - Scribe's Tool Acquired                                     |
-|  +5 Reputation - Willowbyte approves your choice                     |
-|  Achievement Unlocked: "The Modern Path"                             |
-|                                                                       |
-+=======================================================================+
-            ''',
-            '2': '''
-+=======================================================================+
-|                                                                       |
-|  ✓ AMBITIOUS CHOICE! PYCHARM SELECTED!                               |
-|                                                                       |
-|  You've chosen the path of the professional. PyCharm is powerful     |
-|  and will teach you industry-standard practices from day one.        |
-|                                                                       |
-|  Next steps:                                                          |
-|    1. Download Community Edition from jetbrains.com/pycharm          |
-|    2. Create new project                                             |
-|    3. Create your first .py file                                     |
-|    4. Explore its powerful features!                                 |
-|                                                                       |
-|  +10 XP - Scribe's Tool Acquired                                     |
-|  +5 Reputation - Willowbyte admires your ambition                    |
-|  Achievement Unlocked: "The Professional's Tool"                     |
-|                                                                       |
-+=======================================================================+
-            ''',
-            '3': '''
-+=======================================================================+
-|                                                                       |
-|  ✓ SIMPLE CHOICE! IDLE SELECTED!                                     |
-|                                                                       |
-|  You've chosen the path of simplicity. IDLE is perfect for your      |
-|  first steps. Remember to graduate to VS Code within a few weeks!    |
-|                                                                       |
-|  Next steps:                                                          |
-|    1. Find IDLE in your Start Menu/Applications                      |
-|    2. File → New File                                                |
-|    3. Write some code                                                |
-|    4. File → Save as .py                                             |
-|                                                                       |
-|  +10 XP - Scribe's Tool Acquired                                     |
-|  +5 Reputation - Willowbyte supports your start                      |
-|  Achievement Unlocked: "The Simple Path"                             |
-|                                                                       |
-+=======================================================================+
-            '''
-        }
-
-        print(responses.get(choice, '''
-The scrolls dim slightly, awaiting your decision.
-
-Take your time. Installing an editor is an important step. We recommend:
-  • VS Code for beginners (most popular)
-  • PyCharm for ambitious learners
-  • IDLE if you want to start immediately
-
-The grove will wait for your return, young druid.
-        '''))
-
+  A) Deletes your code
+  B) Colors code elements to aid readability
+  C) Runs the code for you
+  D) Translates code to French
+""")
+        q3 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q3 == 'B':
+            print("Correct! Syntax highlighting colors code to improve readability.")
+        else:
+            print("Incorrect. Syntax highlighting colors code to improve readability. Answer is B")
+        _correct = sum([q1 == 'B', q2 == 'A', q3 == 'B'])
+        print(f"\nYou scored {_correct}/3 on this trial.")
         input("\n[Press Enter to continue...]")
-        return True
+        return _correct >= 2
 
 
 class HelloWorldIntroLesson(Lesson):
@@ -2379,83 +2285,55 @@ The first incantation is complete. Your journey has truly begun.
         """)
 
     def challenge(self) -> bool:
+        """Graded knowledge check (auto-generated quiz)."""
         print("""
 ===========================================================================
-                     YOUR FIRST PROGRAM CHALLENGE
+Speak your first words of power into the world.
 ===========================================================================
+""")
+        print("""
+Question 1: Which function displays text on the screen?
 
-Elder Willowbyte's final test for this lesson:
-
-"Create, save, and run your first Python program!"
-
-REQUIREMENTS:
-  1. Create a new file: hello_fraylon.py
-  2. Write: print("Hello, Fraylon! I am [your name]!")
-  3. Save in Documents/PythonProjects/
-  4. Run the program
-  5. See the output: Hello, Fraylon! I am ...!
-
-BONUS CHALLENGES (Optional):
-  • Add more print() lines
-  • Print your favorite number
-  • Print a calculation: print(5 + 3)
-  • Save as different filename and run that too
-
-Have you successfully created and run a .py file?
-        """)
-
-        response = input("\n(yes/not yet): ").strip().lower()
-
-        if response == 'yes' or response == 'y':
-            print("""
-+=======================================================================+
-|                                                                       |
-|  ⭐ CONGRATULATIONS! FIRST PROGRAM EXECUTED! ⭐                       |
-|                                                                       |
-|  This is a moment you will remember forever. Your first Python       |
-|  program has run successfully. You saw your code come to life!       |
-|                                                                       |
-|  You are no longer a "wannabe programmer."                           |
-|  You are no longer "thinking about learning."                        |
-|                                                                       |
-|  YOU ARE A PROGRAMMER.                                               |
-|                                                                       |
-|  +15 XP - First Program Executed!                                    |
-|  +10 Reputation - The Grove Celebrates!                              |
-|  Achievement Unlocked: "Hello, World!"                               |
-|  Achievement Unlocked: "Programmer Status"                           |
-|  Title Gained: "Novice Coder"                                        |
-|                                                                       |
-|  "I am proud of you, young druid. So very proud."                    |
-|                                        - Elder Willowbyte             |
-|                                                                       |
-|  The path ahead is long, but you have taken the most important       |
-|  step. Everything from here is just building on this foundation.     |
-|                                                                       |
-+=======================================================================+
-        """)
+  A) show()
+  B) print()
+  C) echo()
+  D) display()
+""")
+        q1 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q1 == 'B':
+            print("Correct! print() displays output.")
         else:
-            print("""
-The grove waits patiently, young druid.
+            print("Incorrect. print() displays output. Answer is B")
+        print("""
+Question 2: How do you correctly print the word Hello?
 
-This is the most important step - running your first program. Take your time:
+  A) print(Hello)
+  B) print('Hello')
+  C) printHello
+  D) say Hello
+""")
+        q2 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q2 == 'B':
+            print("Correct! Strings must be quoted: print('Hello').")
+        else:
+            print("Incorrect. Strings must be quoted: print('Hello'). Answer is B")
+        print("""
+Question 3: What appears when you run print('Hi')?
 
-1. Create file: hello_fraylon.py
-2. Write code: print("Hello, Fraylon!")
-3. Save the file
-4. Run with: python hello_fraylon.py
-
-If you're stuck:
-  • Check you saved with .py extension
-  • Make sure Python is installed (python --version)
-  • Navigate to correct folder in terminal
-  • Ask for help (r/learnpython is friendly!)
-
-Your first program awaits. The grove believes in you.
-        """)
-
+  A) Hi
+  B) 'Hi' with quotes
+  C) print(Hi)
+  D) Nothing
+""")
+        q3 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q3 == 'A':
+            print("Correct! print outputs the text without the quotes.")
+        else:
+            print("Incorrect. print outputs the text without the quotes. Answer is A")
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'A'])
+        print(f"\nYou scored {_correct}/3 on this trial.")
         input("\n[Press Enter to continue...]")
-        return True
+        return _correct >= 2
 
 
 class ReadingErrorsLesson(Lesson):
@@ -2821,94 +2699,55 @@ Welcome... to Python.
         """)
 
     def challenge(self) -> bool:
+        """Graded knowledge check (auto-generated quiz)."""
         print("""
 ===========================================================================
-                      ERROR UNDERSTANDING CHALLENGE
+Read the runes of failure to grow stronger.
 ===========================================================================
+""")
+        print("""
+Question 1: What is a traceback?
 
-Elder Willowbyte presents you with broken code:
-
-"Identify what's wrong with each of these spells (code snippets):"
-
-BROKEN SPELL 1:
-    print("Hello, World!'
-
-    What's wrong? (Think about it, or try running it!)
-    ANSWER: Missing closing double-quote (opened with " but closed with ')
-
-BROKEN SPELL 2:
-    print(message)
-
-    What's wrong? (Assuming we never defined 'message')
-    ANSWER: NameError - variable 'message' doesn't exist
-
-BROKEN SPELL 3:
-    print("Line 1")
-        print("Line 2")
-
-    What's wrong?
-    ANSWER: IndentationError - Line 2 has unexpected spaces
-
-BROKEN SPELL 4:
-    print("The answer is" + 42)
-
-    What's wrong?
-    ANSWER: TypeError - Can't add string to integer
-
-Do you understand why each of these causes an error?
-        """)
-
-        response = input("\n(yes/I'll learn as I go): ").strip().lower()
-
-        if response == 'yes' or response == 'y':
-            print("""
-+=======================================================================+
-|                                                                       |
-|  ⭐ ACT 0 COMPLETE! THE AWAKENING ACHIEVED! ⭐                       |
-|                                                                       |
-|  You have journeyed from complete novice to capable beginner.        |
-|  You understand errors. You embrace mistakes as teachers.            |
-|                                                                       |
-|  SKILLS MASTERED:                                                    |
-|    ✓ Python knowledge and installation                              |
-|    ✓ Terminal navigation                                            |
-|    ✓ Code editor setup                                              |
-|    ✓ First program execution                                        |
-|    ✓ Error message comprehension                                    |
-|                                                                       |
-|  +15 XP - Error Understanding Mastered!                              |
-|  +10 Reputation - The Grove honors your growth                       |
-|  Achievement Unlocked: "Oracle's Student"                            |
-|  Achievement Unlocked: "ACT 0 COMPLETE"                              |
-|                                                                       |
-|  RANK UP! Unknown Wanderer → NOVICE DRUID                            |
-|                                                                       |
-|  Total Act 0 XP Earned: 70 XP                                        |
-|  Total Reputation: 35                                                |
-|                                                                       |
-|  "You are ready for the Ancient Glyphs, young druid.                 |
-|   ACT I awaits. The real journey begins now."                        |
-|                                        - Elder Willowbyte             |
-|                                                                       |
-+=======================================================================+
-        """)
+  A) A refund
+  B) The report Python prints showing where an error occurred
+  C) A backup file
+  D) A game level
+""")
+        q1 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q1 == 'B':
+            print("Correct! A traceback shows where an error happened.")
         else:
-            print("""
-Learning from errors comes with practice, young druid.
+            print("Incorrect. A traceback shows where an error happened. Answer is B")
+        print("""
+Question 2: Calling prnt('hi') (a typo) raises which error?
 
-As you code more, you'll encounter these errors naturally and learn to
-fix them. The important thing is:
-  • Don't fear errors
-  • Read the messages
-  • Learn from each one
+  A) No error
+  B) NameError because prnt is not defined
+  C) IndexError
+  D) KeyError
+""")
+        q2 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q2 == 'B':
+            print("Correct! An undefined name raises NameError.")
+        else:
+            print("Incorrect. An undefined name raises NameError. Answer is B")
+        print("""
+Question 3: In a traceback, which line is usually most useful?
 
-The grove is proud of your progress through Act 0!
-
-Next: ACT I - The Ancient Glyphs (Python fundamentals)
-        """)
-
-        input("\n[Press Enter to complete Act 0...]")
-        return True
+  A) The first blank line
+  B) The last line: the error type and message
+  C) There is none
+  D) A random middle line
+""")
+        q3 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q3 == 'B':
+            print("Correct! The final line names the error type and message.")
+        else:
+            print("Incorrect. The final line names the error type and message. Answer is B")
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        print(f"\nYou scored {_correct}/3 on this trial.")
+        input("\n[Press Enter to continue...]")
+        return _correct >= 2
 
 
 # ============================================================================
@@ -3126,42 +2965,55 @@ XP Gained: +10 | Reputation: +5
         """)
 
     def challenge(self) -> bool:
+        """Graded knowledge check (auto-generated quiz)."""
         print("""
 ===========================================================================
-                        CHALLENGE: THE GROVE'S GREETING
-===========================================================================
-
-Elder Willowbyte gestures to a blank section of tree bark.
-
-"Prove your understanding. Using print(), create output that displays:
-
-1. A greeting message
-2. Your character name: Grixle Mossroot
-3. Your current location: Mossroot Grove
-4. The phrase: 'The Language of Nature flows through me.'
-
-Use FOUR separate print() statements - one for each line."
-
-Example output:
-    Greetings from the forest!
-    I am Grixle Mossroot
-    Current location: Mossroot Grove
-    The Language of Nature flows through me.
-
+Master the printing incantation.
 ===========================================================================
 """)
+        print("""
+Question 1: What surrounds a string passed to print?
 
-        print("\nHere's the expected output:\n")
-        print("Greetings from the forest!")
-        print("I am Grixle Mossroot")
-        print("Current location: Mossroot Grove")
-        print("The Language of Nature flows through me.")
+  A) Quotes
+  B) Only parentheses
+  C) Square brackets
+  D) Nothing
+""")
+        q1 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q1 == 'A':
+            print("Correct! Strings are wrapped in quotes.")
+        else:
+            print("Incorrect. Strings are wrapped in quotes. Answer is A")
+        print("""
+Question 2: What does print('2' + '2') output?
 
-        print("\n\nRemember: Use print() four times, once for each line.")
-        print("In a real program, you would write these lines and run them!")
+  A) 4
+  B) 22
+  C) An error
+  D) 2 + 2
+""")
+        q2 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q2 == 'B':
+            print("Correct! Adding two strings concatenates them: 22.")
+        else:
+            print("Incorrect. Adding two strings concatenates them: 22. Answer is B")
+        print("""
+Question 3: What does the print() function do?
 
+  A) Saves to disk
+  B) Displays its arguments as output
+  C) Deletes them
+  D) Emails them
+""")
+        q3 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q3 == 'B':
+            print("Correct! print displays its arguments.")
+        else:
+            print("Incorrect. print displays its arguments. Answer is B")
+        _correct = sum([q1 == 'A', q2 == 'B', q3 == 'B'])
+        print(f"\nYou scored {_correct}/3 on this trial.")
         input("\n[Press Enter to continue...]")
-        return True
+        return _correct >= 2
 
 
 class VariablesLesson(Lesson):
@@ -3389,42 +3241,55 @@ XP Gained: +10 | Reputation: +5
         """)
 
     def challenge(self) -> bool:
+        """Graded knowledge check (auto-generated quiz)."""
         print("""
 ===========================================================================
-                        CHALLENGE: THE VARIABLE VESSEL
-===========================================================================
-
-Elder Willowbyte creates a shimmering portal in the air. Variables float
-through it, some correct, some corrupted by the Cult's influence.
-
-"Tell me, young druid: which of these variable assignments are VALID Python?"
-
-Quiz:
-
-1. player_name = "Grixle"           Valid or Invalid?
-2. 1st_place = "Alice"              Valid or Invalid?
-3. user-age = 25                    Valid or Invalid?
-4. _private = 42                    Valid or Invalid?
-5. class = "Warrior"                Valid or Invalid?
-6. health2 = 100                    Valid or Invalid?
-
-Think carefully. Remember the naming rules!
-
+Identify the true names of power among the corrupted.
 ===========================================================================
 """)
+        print("""
+Question 1: Which is a VALID Python variable name?
 
-        print("Answers:")
-        print("1. VALID - starts with letter, uses underscore")
-        print("2. INVALID - starts with number")
-        print("3. INVALID - contains hyphen (minus sign)")
-        print("4. VALID - can start with underscore")
-        print("5. INVALID - 'class' is a reserved keyword")
-        print("6. VALID - can contain numbers, just can't start with them")
+  A) 1st_place
+  B) user-age
+  C) _private
+  D) class
+""")
+        q1 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q1 == 'C':
+            print("Correct! _private is valid; names may start with an underscore.")
+        else:
+            print("Incorrect. _private is valid; names may start with an underscore. Answer is C")
+        print("""
+Question 2: Why is class = 'Warrior' invalid?
 
-        print("\n\nWell done! You understand variable naming conventions.")
+  A) It is too long
+  B) class is a reserved keyword
+  C) It uses a number
+  D) It is actually valid
+""")
+        q2 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q2 == 'B':
+            print("Correct! class is a reserved keyword.")
+        else:
+            print("Incorrect. class is a reserved keyword. Answer is B")
+        print("""
+Question 3: What does = do in health = 100?
 
+  A) Compares values
+  B) Assigns 100 to health
+  C) Prints health
+  D) Deletes health
+""")
+        q3 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q3 == 'B':
+            print("Correct! = assigns the value on the right to the name on the left.")
+        else:
+            print("Incorrect. = assigns the value on the right to the name on the left. Answer is B")
+        _correct = sum([q1 == 'C', q2 == 'B', q3 == 'B'])
+        print(f"\nYou scored {_correct}/3 on this trial.")
         input("\n[Press Enter to continue...]")
-        return True
+        return _correct >= 2
 
 
 class DataTypesLesson(Lesson):
@@ -3688,46 +3553,55 @@ XP Gained: +10 | Reputation: +5
         """)
 
     def challenge(self) -> bool:
+        """Graded knowledge check (auto-generated quiz)."""
         print("""
 ===========================================================================
-                        CHALLENGE: THE TYPE ORACLE
-===========================================================================
-
-Elder Willowbyte conjures a series of values in the air before you.
-
-"Tell me, young druid: what TYPE is each of these values?"
-
-Quiz:
-
-1. 42                    What type?
-2. 3.14                  What type?
-3. 'Python'              What type?
-4. True                  What type?
-5. '100'                 What type? (note the quotes!)
-6. 0.0                   What type?
-7. False                 What type?
-8. "42"                  What type?
-
-Remember: Quotes make it a string!
-
+Name the elemental types woven through all code.
 ===========================================================================
 """)
+        print("""
+Question 1: What type is the value 42?
 
-        print("Answers:")
-        print("1. int (integer - whole number)")
-        print("2. float (decimal number)")
-        print("3. str (string - text in quotes)")
-        print("4. bool (boolean - True or False)")
-        print("5. str (string - has quotes, so it's text not a number!)")
-        print("6. float (has decimal point)")
-        print("7. bool (boolean - True or False)")
-        print("8. str (string - quotes make it text)")
+  A) str
+  B) int
+  C) list
+  D) bool
+""")
+        q1 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q1 == 'B':
+            print("Correct! Whole numbers are int.")
+        else:
+            print("Incorrect. Whole numbers are int. Answer is B")
+        print("""
+Question 2: What type is the value 'hello'?
 
-        print("\n\nExcellent! You understand the fundamental data types.")
-        print("The Four Elements are now yours to command!")
+  A) int
+  B) str
+  C) list
+  D) bool
+""")
+        q2 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q2 == 'B':
+            print("Correct! Text in quotes is a str.")
+        else:
+            print("Incorrect. Text in quotes is a str. Answer is B")
+        print("""
+Question 3: Which function reveals a value's type?
 
+  A) typeof()
+  B) type()
+  C) kind()
+  D) class()
+""")
+        q3 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q3 == 'B':
+            print("Correct! type() returns the type of a value.")
+        else:
+            print("Incorrect. type() returns the type of a value. Answer is B")
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        print(f"\nYou scored {_correct}/3 on this trial.")
         input("\n[Press Enter to continue...]")
-        return True
+        return _correct >= 2
 
 
 class NumbersLesson(Lesson):
@@ -3981,41 +3855,55 @@ XP Gained: +10 | Reputation: +5
         """)
 
     def challenge(self) -> bool:
+        """Graded knowledge check (auto-generated quiz)."""
         print("""
 ===========================================================================
-                    CHALLENGE: THE CALCULATION CRUCIBLE
-===========================================================================
-
-Elder Willowbyte conjures a series of mathematical puzzles in the air.
-
-"Solve these, young druid. What is the result of each expression?"
-
-Quiz:
-
-1. 10 + 5 * 2          = ?
-2. (10 + 5) * 2        = ?
-3. 17 // 5             = ?
-4. 17 % 5              = ?
-5. 2 ** 4              = ?
-6. 10 / 2              = ? (what type?)
-
-Think carefully about order of operations!
-
+Bend the arithmetic arts to your will.
 ===========================================================================
 """)
+        print("""
+Question 1: What does 7 // 2 evaluate to?
 
-        print("Answers:")
-        print("1. 20 (multiply first: 10 + 10)")
-        print("2. 30 (parentheses first: 15 * 2)")
-        print("3. 3 (integer division drops decimal)")
-        print("4. 2 (remainder: 17 = 5*3 + 2)")
-        print("5. 16 (2 to the power of 4)")
-        print("6. 5.0 (float! division always returns float)")
+  A) 3.5
+  B) 3
+  C) 1
+  D) 14
+""")
+        q1 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q1 == 'B':
+            print("Correct! // is floor division: 7 // 2 == 3.")
+        else:
+            print("Incorrect. // is floor division: 7 // 2 == 3. Answer is B")
+        print("""
+Question 2: What does 7 % 2 (modulo) give?
 
-        print("\n\nExcellent! The mathematics of magic are yours to command!")
+  A) 1
+  B) 3
+  C) 3.5
+  D) 0
+""")
+        q2 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q2 == 'A':
+            print("Correct! % is the remainder: 7 % 2 == 1.")
+        else:
+            print("Incorrect. % is the remainder: 7 % 2 == 1. Answer is A")
+        print("""
+Question 3: What does 2 ** 3 give?
 
+  A) 6
+  B) 8
+  C) 5
+  D) 23
+""")
+        q3 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q3 == 'B':
+            print("Correct! ** is exponentiation: 2 ** 3 == 8.")
+        else:
+            print("Incorrect. ** is exponentiation: 2 ** 3 == 8. Answer is B")
+        _correct = sum([q1 == 'B', q2 == 'A', q3 == 'B'])
+        print(f"\nYou scored {_correct}/3 on this trial.")
         input("\n[Press Enter to continue...]")
-        return True
+        return _correct >= 2
 
 class StringsLesson(Lesson):
     '''Lesson 1.5: String Basics - FULLY IMPLEMENTED'''
@@ -112664,101 +112552,55 @@ THE VERDANT CODE - COMPLETE
         """)
 
     def challenge(self) -> bool:
+        """Graded knowledge check (auto-generated quiz)."""
         print("""
-╔═══════════════════════════════════════════════════════════════════════════╗
-║                                                                           ║
-║                     THE FINAL CHALLENGE - REFLECTION                      ║
-║                                                                           ║
-╚═══════════════════════════════════════════════════════════════════════════╝
+===========================================================================
+Synthesize the professional disciplines of the Forge.
+===========================================================================
+""")
+        print("""
+Question 1: What should NEVER be committed to version control?
 
-Elder Willowbyte smiles warmly.
-
-"There is no test, Master Grixle. Only reflection.
-
-Think back to where you started. Remember your first variable, your first
-loop, your first function. Remember the confusion, the struggles, the
-breakthroughs.
-
-Now look at what you can do. Web applications. Databases. Concurrent
-programming. Professional project structure. EVERYTHING.
-
-The challenge is not to answer questions. The challenge is to USE what
-you've learned.
-
-Build something. Anything. A game, a website, a tool, a dream.
-
-That is the final challenge. That is the ONLY challenge that ever mattered.
-
-Will you accept?"
-        """)
-
-        response = input("\nWill you build something amazing? (yes/no): ").strip().lower()
-
-        if response in ['yes', 'y']:
-            print("""
-═══════════════════════════════════════════════════════════════════════════
-
-Elder Willowbyte's eyes shine with tears of joy.
-
-"I knew you would. I ALWAYS knew you would.
-
-Go, Master Grixle. Code awaits. The world awaits. YOUR legacy awaits.
-
-Build beautiful things. Write elegant code. Help others learn.
-
-And remember: somewhere in the digital realm, an old mentor watches proudly
-as you change the world, one line of Python at a time.
-
-Farewell, Master Developer. Farewell, and THANK YOU for completing
-The Verdant Code."
-
-The elder fades into pure light, becoming one with the code itself.
-
-You stand alone at the Summit of Mastery.
-
-But you are not truly alone.
-
-You carry every lesson, every challenge, every breakthrough.
-
-You carry The Verdant Code within you.
-
-Forever.
-
-╔═══════════════════════════════════════════════════════════════════════════╗
-║                                                                           ║
-║                 CONGRATULATIONS ON COMPLETING                             ║
-║                      THE VERDANT CODE!                                    ║
-║                                                                           ║
-║              You are now a Professional Python Developer                  ║
-║                                                                           ║
-║                    Go forth and create wonders!                           ║
-║                                                                           ║
-╚═══════════════════════════════════════════════════════════════════════════╝
-
-[FINAL LESSON COMPLETE +200 XP]
-[ACHIEVEMENT UNLOCKED: MASTER OF THE VERDANT CODE]
-[TOTAL MASTERY ACHIEVED]
-
-Thank you for playing The Verdant Code.
-Your Python journey has only just begun.
-            """)
+  A) Source code
+  B) Secrets and API keys
+  C) The README
+  D) Tests
+""")
+        q1 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q1 == 'B':
+            print("Correct! Never commit secrets; use .gitignore.")
         else:
-            print("""
-═══════════════════════════════════════════════════════════════════════════
+            print("Incorrect. Never commit secrets; use .gitignore. Answer is B")
+        print("""
+Question 2: What is the purpose of automated tests?
 
-Elder Willowbyte nods knowingly.
+  A) To slow the code down
+  B) To verify behavior and catch regressions
+  C) To format code
+  D) To design logos
+""")
+        q2 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q2 == 'B':
+            print("Correct! Tests verify behavior and catch regressions.")
+        else:
+            print("Incorrect. Tests verify behavior and catch regressions. Answer is B")
+        print("""
+Question 3: What does CI/CD primarily automate?
 
-"Take your time. The challenge will wait. When you're ready, you'll build
-something incredible.
-
-The Verdant Code is complete, but YOUR code continues.
-
-Whenever you're ready, Master Grixle. Whenever you're ready."
-
-[FINAL LESSON COMPLETE +200 XP]
-            """)
-
-        return True
+  A) Writing features for you
+  B) Building, testing, and deploying code
+  C) Deleting branches
+  D) Drawing art
+""")
+        q3 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q3 == 'B':
+            print("Correct! CI/CD automates build, test, and deploy.")
+        else:
+            print("Incorrect. CI/CD automates build, test, and deploy. Answer is B")
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        print(f"\nYou scored {_correct}/3 on this trial.")
+        input("\n[Press Enter to continue...]")
+        return _correct >= 2
 
 
 # ============================================================================
@@ -113274,100 +113116,55 @@ upon your shoulders.
         """)
 
     def challenge(self) -> bool:
+        """Graded knowledge check (auto-generated quiz)."""
         print("""
-═══════════════════════════════════════════════════════════════════════════
-                CHALLENGE: CREATE A VALIDATION METACLASS
-═══════════════════════════════════════════════════════════════════════════
-
-The Synthesis presents a glowing challenge:
-
-"Create a metaclass called ValidatedMeta that enforces all subclasses must
-have a 'validate()' method. If a subclass doesn't define validate(), raise
-a TypeError.
-
-Then create two classes:
-1. ValidatedBase (uses the metaclass)
-2. User (inherits from ValidatedBase, defines validate() method)
-
-Show me your mastery of metaclasses!"
-
-REQUIREMENTS:
-1. Create ValidatedMeta(type) metaclass
-2. In __new__, check if 'validate' in attrs (skip for base classes)
-3. Raise TypeError if validate missing
-4. Create ValidatedBase with the metaclass
-5. Create User(ValidatedBase) with validate() method
-
-Ready? Type 'yes' to attempt, 'no' to see solution.
-        """)
-
-        response = input("\nAttempt challenge? (yes/no): ").strip().lower()
-
-        if response == 'yes':
-            print("\n[Implement your solution in a Python file]")
-            print("\nWhen ready, type 'done' to see the solution:")
-            input()
-
+===========================================================================
+Peer behind the veil of how classes themselves are forged.
+===========================================================================
+""")
         print("""
-═══════════════════════════════════════════════════════════════════════════
-SOLUTION: VALIDATION METACLASS
-═══════════════════════════════════════════════════════════════════════════
+Question 1: What is the default metaclass in Python?
 
-    class ValidatedMeta(type):
-        '''Metaclass that enforces validate() method.'''
+  A) object
+  B) type
+  C) class
+  D) meta
+""")
+        q1 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q1 == 'B':
+            print("Correct! type is the default metaclass.")
+        else:
+            print("Incorrect. type is the default metaclass. Answer is B")
+        print("""
+Question 2: A metaclass controls the creation of what?
 
-        def __new__(mcs, name, bases, attrs):
-            # Skip validation for base class
-            if bases and 'validate' not in attrs:
-                raise TypeError(
-                    f"Class {name} must define a 'validate()' method"
-                )
+  A) Instances
+  B) Classes
+  C) Modules
+  D) Variables
+""")
+        q2 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q2 == 'B':
+            print("Correct! Metaclasses control class creation.")
+        else:
+            print("Incorrect. Metaclasses control class creation. Answer is B")
+        print("""
+Question 3: How do you set a custom metaclass?
 
-            return super().__new__(mcs, name, bases, attrs)
-
-    class ValidatedBase(metaclass=ValidatedMeta):
-        '''Base class for validated classes.'''
-        pass
-
-    class User(ValidatedBase):
-        '''User class with validation.'''
-
-        def __init__(self, username, email):
-            self.username = username
-            self.email = email
-
-        def validate(self):
-            '''Validate user data.'''
-            if not self.username:
-                raise ValueError("Username required")
-            if '@' not in self.email:
-                raise ValueError("Invalid email")
-            return True
-
-    # Test
-    user = User('grixle', 'grixle@fraylon.com')
-    user.validate()  # ✓ Valid
-
-    # This would fail:
-    # class Product(ValidatedBase):
-    #     pass
-    # TypeError: Class Product must define a 'validate()' method
-
-═══════════════════════════════════════════════════════════════════════════
-
-The Synthesis nods with approval.
-
-"Excellent! You understand metaclasses not just in theory, but in practice.
-This knowledge separates masters from mere programmers.
-
-Remember: Use metaclasses sparingly. But when you need them, use them well.
-
-Onward to the next lesson - the battle intensifies!"
-
-[CHALLENGE COMPLETE +10 XP]
-        """)
-
-        return True
+  A) class C(metaclass=Meta):
+  B) class C(Meta):
+  C) meta C:
+  D) C.meta = Meta
+""")
+        q3 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q3 == 'A':
+            print("Correct! Use class C(metaclass=Meta):.")
+        else:
+            print("Incorrect. Use class C(metaclass=Meta):. Answer is A")
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'A'])
+        print(f"\nYou scored {_correct}/3 on this trial.")
+        input("\n[Press Enter to continue...]")
+        return _correct >= 2
 
 
 class DescriptorsLesson(Lesson):
@@ -113836,114 +113633,55 @@ The Nexus shimmers with approval.
         """)
 
     def challenge(self) -> bool:
+        """Graded knowledge check (auto-generated quiz)."""
         print("""
-═══════════════════════════════════════════════════════════════════════════
-                CHALLENGE: CREATE A POSITIVE INTEGER DESCRIPTOR
-═══════════════════════════════════════════════════════════════════════════
-
-The Synthesis presents the challenge:
-
-"Create a descriptor called PositiveInteger that:
-1. Only accepts integer values
-2. Only accepts values > 0
-3. Raises TypeError if not an integer
-4. Raises ValueError if <= 0
-
-Then create a Rectangle class with width and height attributes using the
-descriptor. Show that it validates correctly!"
-
-REQUIREMENTS:
-1. PositiveInteger descriptor with __get__, __set__, __set_name__
-2. Type check: isinstance(value, int)
-3. Value check: value > 0
-4. Rectangle class with width and height using the descriptor
-5. Test with valid and invalid values
-
-Ready? Type 'yes' to attempt, 'no' to see solution.
-        """)
-
-        response = input("\nAttempt challenge? (yes/no): ").strip().lower()
-
-        if response == 'yes':
-            print("\n[Implement your solution in a Python file]")
-            print("\nWhen ready, type 'done' to see the solution:")
-            input()
-
+===========================================================================
+Command the protocol that governs attribute access.
+===========================================================================
+""")
         print("""
-═══════════════════════════════════════════════════════════════════════════
-SOLUTION: POSITIVE INTEGER DESCRIPTOR
-═══════════════════════════════════════════════════════════════════════════
+Question 1: Which methods define the descriptor protocol?
 
-    class PositiveInteger:
-        '''Descriptor for positive integers only.'''
+  A) __init__ and __call__
+  B) __get__, __set__, __delete__
+  C) __enter__ and __exit__
+  D) __add__ and __sub__
+""")
+        q1 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q1 == 'B':
+            print("Correct! Descriptors define __get__/__set__/__delete__.")
+        else:
+            print("Incorrect. Descriptors define __get__/__set__/__delete__. Answer is B")
+        print("""
+Question 2: Which built-in is implemented as a descriptor?
 
-        def __set_name__(self, owner, name):
-            self.name = name
-            self.private_name = f'_{name}'
+  A) print
+  B) property
+  C) len
+  D) range
+""")
+        q2 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q2 == 'B':
+            print("Correct! property is a descriptor.")
+        else:
+            print("Incorrect. property is a descriptor. Answer is B")
+        print("""
+Question 3: A descriptor defines behavior when accessed as a what?
 
-        def __get__(self, instance, owner):
-            if instance is None:
-                return self
-            return getattr(instance, self.private_name, 0)
-
-        def __set__(self, instance, value):
-            # Type check
-            if not isinstance(value, int):
-                raise TypeError(
-                    f"{self.name} must be an integer, got {type(value).__name__}"
-                )
-
-            # Value check
-            if value <= 0:
-                raise ValueError(
-                    f"{self.name} must be positive, got {value}"
-                )
-
-            setattr(instance, self.private_name, value)
-
-    class Rectangle:
-        width = PositiveInteger()
-        height = PositiveInteger()
-
-        def __init__(self, width, height):
-            self.width = width
-            self.height = height
-
-        def area(self):
-            return self.width * self.height
-
-    # Test valid values
-    rect = Rectangle(10, 20)
-    print(f"Area: {rect.area()}")  # 200
-
-    # Test invalid type
-    try:
-        rect.width = "ten"  # TypeError
-    except TypeError as e:
-        print(f"Type error: {e}")
-
-    # Test invalid value
-    try:
-        rect.height = -5  # ValueError
-    except ValueError as e:
-        print(f"Value error: {e}")
-
-═══════════════════════════════════════════════════════════════════════════
-
-The Synthesis smiles.
-
-"Perfect! You've mastered descriptors - one of Python's most powerful and
-least understood features.
-
-With descriptors, you can create elegant, self-validating attributes that
-make your code robust and expressive.
-
-Two lessons complete. The Iron Wyrm's grip weakens. Press forward!"
-
-[CHALLENGE COMPLETE +10 XP]
-        """)
-
-        return True
+  A) Function argument
+  B) Class attribute
+  C) List item
+  D) String
+""")
+        q3 = input("Your answer (A/B/C/D): ").strip().upper()
+        if q3 == 'B':
+            print("Correct! Descriptors act when used as class attributes.")
+        else:
+            print("Incorrect. Descriptors act when used as class attributes. Answer is B")
+        _correct = sum([q1 == 'B', q2 == 'B', q3 == 'B'])
+        print(f"\nYou scored {_correct}/3 on this trial.")
+        input("\n[Press Enter to continue...]")
+        return _correct >= 2
 
 
 class ASTLesson(Lesson):
