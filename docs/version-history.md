@@ -1,5 +1,7 @@
 # Version History & Evolution
 
+> 📖 New here? Start with the main [README](../README.md) — the project's single source of truth.
+
 This document tells the long-form story of how **Python and Dragons** grew, and
 recommends a strategy for keeping that history intact while taming the "version
 sprawl" the project has accumulated. For the granular, machine-readable list of

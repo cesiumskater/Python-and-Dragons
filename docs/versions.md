@@ -1,5 +1,7 @@
 # Release Map & History Recovery
 
+> 📖 New here? Start with the main [README](../README.md) — the project's single source of truth.
+
 The repository previously kept a separate `vX.Y.Z/` folder for every release
 (~140 MB of duplicated game files). Those historical folders have been **removed
 from the working tree** to keep the repo lean — but **nothing was lost**. Every

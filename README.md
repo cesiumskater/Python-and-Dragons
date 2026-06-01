@@ -1,7 +1,8 @@
-# Python and Dragons
+# 🐉 Python and Dragons
 
-> A fun, evolving Python text-based RPG that teaches programming through an epic
-> fantasy adventure. Known in-universe as **The Verdant Code**.
+> Learn Python by saving a world. A single-file, dependency-free text RPG that
+> teaches real programming through an epic fantasy adventure — known in-universe
+> as **The Verdant Code**.
 
 ![Latest](https://img.shields.io/badge/latest-v2.2.0-green.svg)
 ![Lessons](https://img.shields.io/badge/lessons-181-blue.svg)
@@ -9,131 +10,203 @@
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue.svg)
 ![Dependencies](https://img.shields.io/badge/dependencies-none%20(stdlib)-brightgreen.svg)
 
-You are **Grixle Mossroot**, a scrappy goblin druid who must master the *Language
-of Nature* (Python) to save the world of **Fraylon** from the Iron Wyrm and the
-Cult of the Dragon. Guided by the treant **Elder Willowbyte**, you progress from
-absolute beginner to *Mythic Hero* across 10 Acts and 181 lessons — every concept
-tied to a story beat, every challenge a step toward saving the world.
-
-The game is a single, self-contained Python file with **no external dependencies**.
+> **This README is the single source of truth for the project.** Deeper material
+> lives in [`docs/`](docs/) and the full change history in [`CHANGELOG.md`](CHANGELOG.md),
+> but start here.
 
 ---
 
-## Quick Start
+## Overview
 
-The current release lives in [`v2.2.0/`](v2.2.0/):
+**Python and Dragons** is a story-driven Python learning game. You play
+**Grixle Mossroot**, a scrappy goblin druid who must master the *Language of
+Nature* (Python) to save the world of **Fraylon** from the Iron Wyrm and the
+Cult of the Dragon. Guided by the treant **Elder Willowbyte**, you progress from
+absolute beginner to *Mythic Hero* across **10 Acts** and **181 lessons** —
+every concept tied to a story beat, every challenge a step toward saving the
+world.
+
+It is **one self-contained Python file** with **no external dependencies** — a
+learner can download it and run it with nothing but Python installed.
+
+- 🎓 **A real curriculum** — from "what is Python?" to async, design patterns,
+  metaclasses, and professional tooling.
+- ⚔️ **Wrapped in an RPG** — XP, levels, hero ranks, reputation, achievements,
+  and a complete narrative arc.
+- ✅ **Graded for real** — every lesson ends in a scored quiz you must actually
+  pass (see [Features](#features)).
+
+---
+
+## Features
+
+| Feature | Description |
+|---|---|
+| 🗺️ **181 lessons across 10 Acts** | A full path from setup (Act 0) to mastery (Act IX), each with story, teaching, and a challenge. |
+| ✅ **Graded challenges** | Every lesson ends in a 3-question quiz; you must answer a majority correctly to earn XP and advance. |
+| 📖 **Two play modes** | **Story Mode** (full quest, saves progress) and **Reference Mode** (browse any topic freely, no saves). |
+| 🧭 **Skill assessment** | A first-run wizard recommends your starting Act so beginners and experienced devs both start in the right place. |
+| 📈 **RPG progression** | Earn XP (~2,000 total), climb skill levels (Novice → Legendary) and hero ranks (Unknown Wanderer → Mythic Hero of Fraylon), and build reputation. |
+| 💾 **Robust saves** | Auto-save after each lesson plus manual save; corrupt saves recover gracefully. |
+| ⚙️ **Settings** | Toggle hints, auto-save, and lesson-skipping, persisted to your save. |
+| 🧩 **Zero dependencies** | Pure Python standard library; runs on Windows, macOS, and Linux. |
+
+---
+
+## The Story
+
+> *"Young Grixle Mossroot, welcome to Mossroot Grove. The world of Fraylon is in
+> grave danger. You must learn the Language of Nature — what mortals call
+> 'Python' — to stop the Cult of the Dragon."* — Elder Willowbyte
+
+Your journey takes you from the **Mossroot Grove** through the port city of
+**Mallport**, the **Library of Thorns**, the **Iron Sanctum**, the **Forge of
+Mastery**, and finally the **Master's Path** — where the Iron Wyrm awaits. Each
+location maps to a set of Python skills, and the finale is a two-part boss battle
+you can only win by writing real code in your head.
+
+---
+
+## How to Play / Quick Start
+
+The current release lives in [`v2.2.0/`](v2.2.0/). From the repository root:
 
 ```bash
 python "v2.2.0/The Verdant Code 2.2.0.py"
 ```
 
-**Requirements:** Python 3.8+ (standard library only). Works on Windows, macOS,
-and Linux. Your progress saves automatically to a local JSON file.
+On first run, a setup wizard runs a short **skill assessment** and lets you name
+your hero. Then you reach the **main menu**:
 
-> Looking for an earlier release or the original *Serpent's Code* prototype? See
-> the [version map](docs/versions.md).
+```
+  1. Story Mode (Full quest with saves)
+  2. Reference Mode (Browse topics, no saves)
+  3. Retake Skill Assessment
+  4. View Hero Status
+  5. Settings
+  6. Credits
+  7. Exit Game
+```
+
+**A lesson plays out as:** read the narrative intro → study the teaching content
+(examples, key concepts, common pitfalls, best practices) → answer the
+**challenge** quiz → earn XP and advance. Pass the challenge and your progress
+auto-saves; miss it and you can review and try again.
 
 ---
 
-## What You'll Learn
+## Installation
 
-The curriculum spans 10 Acts, from "what is Python?" to async, design patterns,
-and architecture:
+**Requirements:** Python **3.8+** (3.11+ recommended). No third-party packages —
+the game uses only the standard library.
 
-| Path | Acts | Focus |
-|------|------|-------|
-| **Beginner** | 0–II | Setup, variables, types, collections |
-| **Intermediate** | III–V | Control flow, functions, files & exceptions |
-| **Advanced** | VI–VII | OOP, algorithms, Big-O thinking |
-| **Professional** | VIII | Git, testing, debugging, packaging, CI/CD |
-| **Master** | IX | Metaclasses, async, design patterns — and the final battle |
+```bash
+# 1. Get the code
+git clone https://github.com/cesiumskater/Python-and-Dragons.git
+cd Python-and-Dragons
 
-181 lessons · ~2,715 XP · estimated 80–120 hours of content.
+# 2. (Optional) confirm your Python version
+python --version        # should be 3.8 or newer
+
+# 3. Play
+python "v2.2.0/The Verdant Code 2.2.0.py"
+```
+
+A built-in **Pre-Flight Check** verifies your Python version, OS, terminal, file
+permissions, and (optionally) Git before the game starts.
 
 ---
 
-## Repository Structure
+## Gameplay & Learning Path
 
-```
-Python-and-Dragons/
-├── README.md                  # You are here
-├── CHANGELOG.md               # Consolidated, version-by-version change history
-├── docs/                      # Project documentation (see docs/README.md)
-├── scripts/                   # Maintenance scripts (e.g. publishing release tags)
-└── v2.2.0/                    # The current, runnable release
-```
+The curriculum spans 10 Acts. The skill assessment will drop you at a sensible
+starting point, but you can jump to any Act from Story Mode.
 
-Only the **current** release lives in the tree. Every earlier release
-(`v0.0.x` → `v2.1.6`) is preserved in git history and recoverable by tag or
-commit — see the **[release map](docs/versions.md)**.
+| Path | Acts | Focus | Lessons |
+|------|------|-------|---------|
+| **Beginner** | 0 – II | Setup, variables, types, collections | 46 |
+| **Intermediate** | III – V | Control flow, functions, files & exceptions | 53 |
+| **Advanced** | VI – VII | OOP, algorithms, Big-O thinking | 32 |
+| **Professional** | VIII | Git, testing, packaging, debugging, CI/CD | 30 |
+| **Master** | IX | Metaclasses, async, design patterns — and the final battle | 20 |
 
-> **History preserved, sprawl removed.** The project used to keep a full folder
-> per release (~140 MB of duplicated game files). Those folders now live only in
-> git history; annotated tags mark each one (publish them with
-> [`scripts/create-release-tags.sh`](scripts/create-release-tags.sh)). The full
-> rationale is in
-> **[docs/version-history.md](docs/version-history.md#documentation--cleanup-strategy)**.
+**Progression systems:**
+
+- **XP** — ~10 XP per lesson (with a bonus finale), ~2,000 XP total.
+- **Skill level** (by XP): Novice → Apprentice → Adept → Expert → Master → Legendary.
+- **Hero rank** (by reputation): Unknown Wanderer → … → **Mythic Hero of Fraylon**.
+
+---
+
+## Saving & Progress
+
+Story Mode keeps your progress in a JSON save file:
+
+- **File:** `verdant_code_save.json`, written to your current working directory.
+- **When:** automatically after each completed lesson (if auto-save is on), and
+  on demand via *Save game manually*.
+- **What's stored:** hero name, current Act, completed/skipped lessons, XP,
+  reputation, skill level, hero rank, achievements, time played, preferences, and
+  the game version.
+- **Resilience:** a missing or corrupted save is detected and reset to a fresh
+  start rather than crashing.
+- **Reference Mode never saves** — it's a safe sandbox for browsing topics.
+
+> Save files are intentionally **git-ignored** (see [`.gitignore`](.gitignore)),
+> so your personal progress is never committed.
 
 ---
 
 ## Version History
 
-Python and Dragons has evolved through three distinct eras, growing from a
-5-quest prototype into a 181-lesson learning epic. The game world (Fraylon),
-hero (Grixle Mossroot), and mentor (Elder Willowbyte) have been remarkably
-consistent throughout — it's the scope and polish that changed.
+Python and Dragons evolved through three eras, growing from a 5-quest prototype
+into a 181-lesson learning epic. The world (Fraylon), hero (Grixle), and mentor
+(Elder Willowbyte) stayed consistent throughout — scope and polish are what
+changed.
 
-> Release dates below are **as documented** in each version's notes. The git
-> history shows all versions were committed in January 2026; the in-file dates
-> reflect the project's narrative timeline rather than commit dates. See the
-> [detailed history](docs/version-history.md) for the full story and the
-> [CHANGELOG](CHANGELOG.md) for granular changes.
+- **🐍 Era 1 — The Serpent's Code (`v0.0.x`):** the origin. A single-file
+  prototype with 5 quests and the foundational save system.
+- **🌿 Era 2 — The Verdant Code (`v1.1.x` → `v1.3.0`):** renamed and expanded
+  into dual Story/Reference modes, a rich narrative, a career-prep curriculum
+  (Acts 0, VIII, IX), and finally all 181 lessons.
+- **⚔️ Era 3 — Master Edition (`v2.0.0` → `v2.2.0`):** the production era —
+  rebrand, thousands of tests, PEP 8/20 compliance, and code cleanup.
 
-### The Three Eras
+| Version | Era | Highlights |
+|---------|-----|------------|
+| `v0.0.4` | Serpent's Code | 5-quest prototype; world of Fraylon; save system |
+| `v1.1.5` | Verdant Code | Dual modes, Unicode lesson, list mini-game; 153 topics |
+| `v1.2.0` | Verdant Code | "Zero to Enterprise": Acts 0, VIII, IX; skill assessment |
+| `v1.3.0` | Verdant Code | All 181 lessons registered; Act IX finale |
+| `v2.0.0` | Master Edition | Rebrand; syntax fixes; production-ready |
+| `v2.1.x` | Master Edition | Bug fixes, PEP 8/20, thousands of tests |
+| **`v2.2.0`** | **Master Edition** | **Current** — code cleanup + QA hardening |
 
-**🐍 Era 1 — The Serpent's Code (`v0.0.x`)**
-The origin. A single-file prototype titled *The Serpent's Code* with 5 playable
-quests (variables, conditionals, input, lists, functions) on a framework built
-for 19. Established the world of Fraylon and the save/load system.
+Earlier releases are no longer kept as folders in the tree (that caused ~140 MB
+of duplication); each is preserved in git history and recoverable by tag or
+commit. See the **[release map](docs/versions.md)** and the full
+**[CHANGELOG](CHANGELOG.md)**.
 
-**🌿 Era 2 — The Verdant Code (`v1.1.x` → `v1.3.0`)**
-The game was renamed *The Verdant Code* and grew explosively. The `v1.1.x` line
-added the dual Story/Reference modes, a rich D&D narrative, and topic-by-topic
-lessons. `v1.2.x` reframed the project as a *career-preparation* system —
-adding Act 0 (onboarding), Act VIII (professional tooling), Act IX (advanced
-topics), a skill-assessment quiz, and a skip system. `v1.3.0` completed all 181
-lessons and wired up Act IX's two-part final battle.
+---
 
-**⚔️ Era 3 — Master Edition (`v2.0.0` → `v2.2.0`)**
-The production era. `v2.0.0` rebranded to *Master Edition* and declared the game
-feature-complete. The `v2.1.x` line was pure stabilization — bug fixes, PEP 8/20
-compliance, thousands of automated tests, and menu/Reference-mode polish.
-`v2.2.0` is the current release, focused on code cleanup.
+## Repository Layout
 
-### At a Glance
+```
+Python-and-Dragons/
+├── README.md                  # You are here — the single source of truth
+├── CHANGELOG.md               # Consolidated, version-by-version history
+├── docs/                      # Deeper documentation (see docs/README.md)
+│   ├── architecture.md        #   how the game is built
+│   ├── version-history.md     #   full evolution + cleanup strategy
+│   └── versions.md            #   release → tag → commit recovery map
+├── scripts/
+│   └── create-release-tags.sh # publish per-release git tags / Releases
+└── v2.2.0/
+    └── The Verdant Code 2.2.0.py   # the current, runnable game (single file)
+```
 
-| Version | Documented Date | Title / Theme | Highlights |
-|---------|-----------------|---------------|------------|
-| **v0.0.0–0.0.4** | 2025 | *The Serpent's Code* | First prototype; 5 quests; world of Fraylon; save system |
-| **v1.1.0** | "2024-10-01" | The Verdant Code (Enhanced) | Story + Reference modes; TOC navigation; XP/progression |
-| **v1.1.2** | 2025 | Cybersecurity & Zen | Security topics, Zen of Python, story-mode demo |
-| **v1.1.3–1.1.4** | 2025 | Storyline & TOC | Expanded narrative, table of contents, bug fixes |
-| **v1.1.5** | 2025-12-22 | *The Lost Language* | Unicode/encoding lesson, list mini-game; 153 topics |
-| **v1.2.0** | 2025-12-22 | *Zero to Enterprise* | Act 0, Act VIII, Act IX; skill assessment; skip system; portfolio projects |
-| **v1.2.1** | 2025 | Onboarding polish | Quickstart & onboarding refinements |
-| **v1.2.2** | 2025-12-25 | Act IX content | Acts 0–VIII complete (161 lessons); Act IX authored |
-| **V1.3.0** | 2026-01-01 | *The Complete Journey* | All 181 lessons; Act IX registered; 7 duplicate classes removed |
-| **v2.0.0** | 2026-01-04 | *Master Edition* | Rebrand; production-ready; quote/syntax fixes; verified |
-| **v2.1.0** | 2026-01-06 | Bug fixes | PEP 8 improvements, bug fixes |
-| **v2.1.1** | 2026-01-06 | Tested | 3,439 automated tests passing |
-| **v2.1.2** | 2026-01-06 | PEP compliant | PEP 8 & PEP 20 compliance verified |
-| **v2.1.3** | 2026-01-06 | Tested | 5,611 automated tests passing |
-| **v2.1.4** | 2026-01-07 | Navigation | Menu navigation fixes |
-| **v2.1.5** | 2026-01-07 | Reference mode | Improved Reference Mode lesson flow |
-| **v2.1.6** | 2026-01-07 | Tested | Comprehensive testing verification |
-| **v2.2.0** | 2026-01-23 | **Current** | Code cleanup |
-
-For the complete, granular list of changes per release, see **[CHANGELOG.md](CHANGELOG.md)**.
+Only the **current** release ships in the tree. Every earlier version lives in
+git history — see [`docs/versions.md`](docs/versions.md) to retrieve any of them.
 
 ---
 
@@ -142,27 +215,38 @@ For the complete, granular list of changes per release, see **[CHANGELOG.md](CHA
 | Document | Purpose |
 |----------|---------|
 | [CHANGELOG.md](CHANGELOG.md) | Every notable change, version by version |
-| [docs/version-history.md](docs/version-history.md) | The full evolution narrative + cleanup strategy |
-| [docs/architecture.md](docs/architecture.md) | How the game is built (engine, lessons, saves, modes) |
-| [docs/versions.md](docs/versions.md) | A map of every version folder and its key files |
+| [docs/architecture.md](docs/architecture.md) | How the game is built (engine, lessons, Acts, modes, saves) |
+| [docs/version-history.md](docs/version-history.md) | The full evolution narrative + repo cleanup strategy |
+| [docs/versions.md](docs/versions.md) | A map for recovering any historical version |
 
 ---
 
 ## Contributing
 
-This is an educational project by **Danny (Cesium) P.** Suggestions and bug
-reports are welcome via GitHub Issues. When proposing changes, please target the
-**current** version and follow the lesson template described in
-[docs/architecture.md](docs/architecture.md).
+This is an educational project by **Danny (Cesium) P.** Issues and suggestions
+are welcome via GitHub.
+
+To add or change a lesson, follow the `Lesson` pattern described in
+[docs/architecture.md](docs/architecture.md): subclass `Lesson`, implement
+`teach()` and a graded `challenge()`, register it in the Act registry, and keep
+the Fraylon narrative voice. Please confirm the file still compiles
+(`python -m py_compile`) and that your challenge can both pass (correct answers)
+and fail (wrong answers) before submitting.
+
+---
 
 ## License
 
-The game has historically been described as an open-source educational project.
-A formal `LICENSE` file has not yet been added to the repository — see the
-[open items](docs/version-history.md#known-inconsistencies--open-items) for
-details.
+Python and Dragons has historically been described as an open-source educational
+project. A formal `LICENSE` file has **not** yet been added to the repository;
+until one is, please treat the code as "all rights reserved by the author" for
+redistribution purposes and reach out before reusing it commercially. Adding an
+explicit license is tracked as an open item in
+[docs/version-history.md](docs/version-history.md#known-inconsistencies--open-items).
 
 ---
+
+**Created by Danny (Cesium) P.**
 
 *"In the beginning was the Code, and the Code was with Python, and the Code was
 Python."* — Elder Willowbyte, First Treant of Mossroot Grove 🌳
