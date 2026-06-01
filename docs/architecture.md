@@ -1,5 +1,7 @@
 # Architecture Overview
 
+> 📖 New here? Start with the main [README](../README.md) — the project's single source of truth.
+
 A high-level guide to how **The Verdant Code** is built. It is distilled from the
 game's release notes and source headers and is meant to orient contributors —
 read it before adding or modifying a lesson. (Exact class and method names have

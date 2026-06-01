@@ -12,9 +12,28 @@ and the project aims to follow [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [Unreleased] — Repository maintenance
+## [Unreleased]
 
-Documentation and repository housekeeping; no gameplay changes.
+Post-2.2.0 work, not yet tagged as a release: a full QA pass that hardened the
+game, plus documentation and repository housekeeping.
+
+### Fixed — Gameplay & QA (the v2.2.0 game)
+- **Clean startup.** Removed developer scaffolding that printed ~372 lines of
+  build noise on every launch (5 stray `if __name__ == "__main__"` harnesses and
+  14 bare top-level `print()` banners left over from concatenated lesson
+  modules). The game now opens directly on the Pre-Flight Check.
+- **Challenges grade for real.** Previously 161 of 182 lesson challenges read the
+  player's answer and ignored it (always passed). All **181 lessons now score
+  answers** and require a passing majority — 147 structured quizzes were
+  converted to real scoring and 13 intro/reveal lessons were given new
+  3-question graded quizzes. Verified: every answer-capturing challenge passes on
+  correct answers and fails on wrong ones (0 anomalies).
+- **Accurate XP ceiling:** `TOTAL_XP_AVAILABLE` corrected `2715` -> `2000` (the
+  true achievable total).
+- **Graceful exit:** EOF / closed stdin no longer dumps a Python traceback.
+- **Skill assessment** can now recommend **Act V** (the score map skipped it).
+- **Functional Settings menu** (toggle hints / auto-save / skipping); removed a
+  duplicate auto-save message; `time_played` stored tidily.
 
 ### Added
 - Root `README.md` (with a Version History section), consolidated `CHANGELOG.md`,
