@@ -338,7 +338,7 @@ class SkillAssessment:
         print("\n" + "=" * 70)
         print("  ASSESSMENT COMPLETE")
         print("=" * 70)
-        print(f"\nScore: {self.score}/35")
+        print(f"\nScore: {self.score}/{sum(max(q['points'].values()) for q in self.questions)}")
         print(f"Recommended: Act {self.recommended_act}")
 
         self._show_recommendation()
@@ -436,21 +436,26 @@ class GameProgress:
             try:
                 with open(self.save_file, 'r') as f:
                     data = json.load(f)
-                    self.player_name = data.get('player_name', 'Grixle Mossroot')
-                    self.current_act = data.get('current_act', 1)
-                    self.current_scene = data.get('current_scene', 0)
-                    self.completed_lessons = data.get('completed_lessons', [])
-                    self.skipped_lessons = data.get('skipped_lessons', [])
-                    self.total_score = data.get('total_score', 0)
-                    self.unlocked_acts = data.get('unlocked_acts', [0, 1])
-                    self.has_story_progress = data.get('has_story_progress', False)
-                    self.skill_level = data.get('skill_level', 'novice')
-                    self.first_run_complete = data.get('first_run_complete', False)
-                    self.preferences = data.get('preferences', self.preferences)
-                    self.achievements = data.get('achievements', [])
-                    self.time_played = data.get('time_played', 0)
-                    self.reputation = data.get('reputation', 0)
-                    self.hero_rank = data.get('hero_rank', 'Unknown Wanderer')
+                    def _typed(key, default, kinds):
+                        '''Save field with type check: null/mistyped values fall back'''
+                        value = data.get(key, default)
+                        return value if isinstance(value, kinds) else default
+
+                    self.player_name = _typed('player_name', 'Grixle Mossroot', str)
+                    self.current_act = _typed('current_act', 1, int)
+                    self.current_scene = _typed('current_scene', 0, int)
+                    self.completed_lessons = _typed('completed_lessons', [], list)
+                    self.skipped_lessons = _typed('skipped_lessons', [], list)
+                    self.total_score = _typed('total_score', 0, (int, float))
+                    self.unlocked_acts = _typed('unlocked_acts', [0, 1], list)
+                    self.has_story_progress = bool(data.get('has_story_progress', False))
+                    self.skill_level = _typed('skill_level', 'novice', str)
+                    self.first_run_complete = bool(data.get('first_run_complete', False))
+                    self.preferences = _typed('preferences', self.preferences, dict)
+                    self.achievements = _typed('achievements', [], list)
+                    self.time_played = _typed('time_played', 0, (int, float))
+                    self.reputation = _typed('reputation', 0, (int, float))
+                    self.hero_rank = _typed('hero_rank', 'Unknown Wanderer', str)
                     return True
             except (json.JSONDecodeError, KeyError, TypeError):
                 return False
@@ -491,15 +496,36 @@ class GameProgress:
     def complete_lesson(self, lesson_id: str, score: int = 10):
         '''Mark lesson complete'''
         if lesson_id not in self.completed_lessons:
+            old_rank = self.hero_rank
             self.completed_lessons.append(lesson_id)
             self.total_score += score
             self.reputation += 5
             self.has_story_progress = True
             self._update_skill_level()
             self._update_hero_rank()
+            self._check_achievements(old_rank)
 
             if self.preferences.get('auto_save', True):
                 self.save_progress()
+
+    def _check_achievements(self, old_rank: str):
+        '''Award milestone and rank achievements'''
+        milestones = {
+            1: '🌱 First Steps — completed your first lesson',
+            10: '📜 Apprentice Scholar — 10 lessons complete',
+            50: '📚 Dedicated Student — 50 lessons complete',
+            100: '🏛️ Centurion of Code — 100 lessons complete',
+            181: '🐉 Master of the Verdant Code — every lesson complete',
+        }
+        earned = milestones.get(len(self.completed_lessons))
+        if earned and earned not in self.achievements:
+            self.achievements.append(earned)
+            print(f"\n🏆 ACHIEVEMENT UNLOCKED: {earned}")
+        if self.hero_rank != old_rank:
+            badge = f'🎖️ Rank achieved: {self.hero_rank}'
+            if badge not in self.achievements:
+                self.achievements.append(badge)
+                print(f"\n🏆 ACHIEVEMENT UNLOCKED: {badge}")
 
     def skip_lesson(self, lesson_id: str):
         '''Mark lesson skipped'''
@@ -549,7 +575,7 @@ class GameProgress:
         '''Manual save'''
         if self.save_progress():
             print(f"\n[SAVE] Success!")
-            print(f"       Act {self.current_act}, Scene {self.current_scene}")
+            print(f"       Act {self.current_act}")
             print(f"       {self.total_score} XP, {self.reputation} Rep")
             print(f"       {self.hero_rank}")
             return True
@@ -614,11 +640,11 @@ class Lesson:
     def quick_quiz(self) -> bool:
         '''Quick quiz'''
         print("\n" + "=" * 70)
-        print("  QUICK QUIZ")
+        print("  SKIP CHECK")
         print("=" * 70)
-        print("\n2 of 3 correct to skip")
+        print("\nSkipped lessons earn no XP but unlock the next lesson.")
         print()
-        choice = input("Understand this topic? (yes/no): ").strip().lower()
+        choice = input("Do you already understand this topic? (yes/no): ").strip().lower()
         return choice == 'yes'
 
     def show_common_pitfalls(self):
@@ -651,7 +677,9 @@ class Lesson:
 
     def run(self, progress: Optional[GameProgress] = None, save_progress: bool = True) -> bool:
         '''Execute lesson'''
-        if self.skippable and progress and save_progress:
+        skip_allowed = (self.skippable and progress and save_progress
+                        and progress.preferences.get('skip_enabled', True))
+        if skip_allowed:
             skip_choice = self.can_skip()
 
             if skip_choice == 'skip':
@@ -675,7 +703,7 @@ class Lesson:
         success = self.challenge()
 
         if success and progress and save_progress:
-            progress.complete_lesson(self.lesson_id, score=10)
+            progress.complete_lesson(self.lesson_id, score=self.xp_reward)
 
         return success
 
@@ -122518,7 +122546,8 @@ def get_next_lesson(progress: GameProgress):
     next_act = current_act + 1
     if next_act in registry and registry[next_act]:
         progress.current_act = next_act
-        progress.unlocked_acts.append(next_act)
+        if next_act not in progress.unlocked_acts:
+            progress.unlocked_acts.append(next_act)
         progress.save_progress()
         return (registry[next_act][0], next_act, 0)
 
@@ -122591,30 +122620,23 @@ class StoryMode:
             print("\n" + "=" * 70)
             print(f"  ACT {act_num} - {lesson.title}")
             print("=" * 70)
-            print(f"\n{lesson.description}\n")
 
-            # Run the lesson
-            lesson.teach()
+            # Full lesson pipeline: skip offer, intro, teach, pitfalls,
+            # best practices, challenge, completion (+ auto-save)
+            old_rank = self.progress.hero_rank
+            old_score = self.progress.total_score
+            challenge_passed = lesson.run(self.progress)
 
-            # Challenge
-            print("\n" + "=" * 70)
-            print("  TIME TO TEST YOUR KNOWLEDGE")
-            print("=" * 70)
-            challenge_passed = lesson.challenge()
-
-            # Record completion
             if challenge_passed:
-                self.progress.complete_lesson(lesson.lesson_id, lesson.xp_reward)
-                print(f"\n✓ Lesson Complete! +{lesson.xp_reward} XP")
+                gained = self.progress.total_score - old_score
+                if gained:
+                    print(f"\n✓ Lesson Complete! +{gained} XP")
+                else:
+                    print("\n✓ Lesson skipped (no XP awarded)")
                 print(f"Total XP: {self.progress.total_score}")
 
-                # Update hero rank if needed
-                old_rank = self.progress.hero_rank
-                self.progress._update_hero_rank()
                 if self.progress.hero_rank != old_rank:
                     print(f"\n🌟 RANK UP! You are now: {self.progress.hero_rank}!")
-
-                self.progress.save_progress()
 
                 # Ask if they want to continue
                 print("\n" + "=" * 70)
@@ -122641,6 +122663,8 @@ class StoryMode:
         if choice.isdigit() and 0 <= int(choice) <= 9:
             act_num = int(choice)
             self.progress.current_act = act_num
+            if act_num not in self.progress.unlocked_acts:
+                self.progress.unlocked_acts.append(act_num)
             self.progress.save_progress()
             print(f"\n✓ Jumped to Act {choice}!")
 
@@ -122704,30 +122728,22 @@ class StoryMode:
         print("\n" + "=" * 70)
         print(f"  ACT {act_num} - {lesson.title}")
         print("=" * 70)
-        print(f"\n{lesson.description}\n")
 
-        # Run the lesson
-        lesson.teach()
+        # Full lesson pipeline (see continue_quest)
+        old_rank = self.progress.hero_rank
+        old_score = self.progress.total_score
+        challenge_passed = lesson.run(self.progress)
 
-        # Challenge
-        print("\n" + "=" * 70)
-        print("  TIME TO TEST YOUR KNOWLEDGE")
-        print("=" * 70)
-        challenge_passed = lesson.challenge()
-
-        # Record completion
         if challenge_passed:
-            self.progress.complete_lesson(lesson.lesson_id, lesson.xp_reward)
-            print(f"\n✓ Lesson Complete! +{lesson.xp_reward} XP")
+            gained = self.progress.total_score - old_score
+            if gained:
+                print(f"\n✓ Lesson Complete! +{gained} XP")
+            else:
+                print("\n✓ Recorded (already complete or skipped — no XP)")
             print(f"Total XP: {self.progress.total_score}")
 
-            # Update hero rank if needed
-            old_rank = self.progress.hero_rank
-            self.progress._update_hero_rank()
             if self.progress.hero_rank != old_rank:
                 print(f"\n🌟 RANK UP! You are now: {self.progress.hero_rank}!")
-
-            self.progress.save_progress()
         else:
             print("\nDon't worry! Review the material and try again when ready.")
 
@@ -122750,6 +122766,8 @@ class StoryMode:
         print(f"  Lessons Skipped: {len(self.progress.skipped_lessons)}")
         print(f"  Time Played: {int(self.progress.time_played // 60)} minutes")
         print(f"\nAchievements: {len(self.progress.achievements)}")
+        for a in self.progress.achievements:
+            print(f"  {a}")
         input("\n[Press Enter...]")
 
 
@@ -122821,6 +122839,8 @@ class ReferenceMode:
 
             # Show the teaching content
             lesson.teach()
+            lesson.show_common_pitfalls()
+            lesson.show_best_practices()
 
             # Optionally run challenge without saving
             print("\n" + "=" * 70)
@@ -122928,6 +122948,9 @@ def main_menu():
             choice = input("Update current Act? (y/n): ").strip().lower()
             if choice == 'y':
                 progress.current_act = recommended_act
+                for act in range(recommended_act + 1):
+                    if act not in progress.unlocked_acts:
+                        progress.unlocked_acts.append(act)
                 progress.save_progress()
             input("\n[Press Enter...]")
         elif choice == '4':
@@ -122967,6 +122990,7 @@ def main_menu():
             print("\nThank you for playing!")
             input("\n[Press Enter...]")
         elif choice == '7':
+            progress.save_progress()
             print("\n" + "=" * 70)
             print("  FAREWELL, HERO")
             print("=" * 70)
