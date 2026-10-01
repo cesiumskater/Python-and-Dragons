@@ -49,6 +49,7 @@ import subprocess
 from datetime import datetime
 from typing import Dict, List, Any, Callable, Optional, Tuple
 import traceback
+import builtins
 import random
 import math
 import time
@@ -182,6 +183,50 @@ class PreFlightCheck:
             print("=" * 70)
             input("\n[Press Enter to begin your legendary journey...]")
             return True
+
+
+# ============================================================================
+# STORY PAGER - pauses long lesson text so the story can actually be read
+# ============================================================================
+
+class StoryPager:
+    '''Wraps stdout while a lesson teaches, pausing after each screenful'''
+
+    def __init__(self, real_stdout, page_lines: int):
+        self.real = real_stdout
+        self.page_lines = page_lines
+        self.lines = 0
+
+    @staticmethod
+    def default_page_lines() -> int:
+        '''Lines per page: terminal height minus room for the prompt'''
+        import shutil
+        height = shutil.get_terminal_size(fallback=(80, 22)).lines
+        return max(10, height - 4)
+
+    def write(self, text: str) -> int:
+        for chunk in text.splitlines(keepends=True):
+            self.real.write(chunk)
+            if chunk.endswith("\n"):
+                self.lines += 1
+                if self.lines >= self.page_lines:
+                    self.pause("[Press Enter to keep reading...]")
+        return len(text)
+
+    def pause(self, prompt: str):
+        '''Wait for Enter, writing the prompt straight to the real stdout'''
+        self.lines = 0
+        sys.stdout = self.real
+        try:
+            input(prompt)
+        finally:
+            sys.stdout = self
+
+    def flush(self):
+        self.real.flush()
+
+    def __getattr__(self, name):
+        return getattr(self.real, name)
 
 
 # ============================================================================
@@ -602,6 +647,16 @@ class GameProgress:
         else:
             self.hero_rank = '⭐ MYTHIC HERO OF FRAYLON ⭐'
 
+    def reset_all(self) -> bool:
+        '''Delete the save file and return every field to a brand-new game'''
+        if os.path.exists(self.save_file):
+            try:
+                os.remove(self.save_file)
+            except OSError:
+                return False
+        self.__init__(self.save_file)
+        return True
+
     def manual_save(self):
         '''Manual save'''
         if self.save_progress():
@@ -684,6 +739,35 @@ class Lesson:
         print("=" * 70)
         return self.challenge()
 
+    def teach_paged(self, paged: bool = True):
+        '''Run teach(), pausing every screenful so the story isn't scrolled away'''
+        if not paged:
+            self.teach()
+            return
+
+        real_stdout = sys.stdout
+        pager = StoryPager(real_stdout, StoryPager.default_page_lines())
+        real_input = builtins.input
+
+        def lesson_input(prompt=""):
+            # A lesson asking its own question is a natural pause point
+            pager.lines = 0
+            sys.stdout = real_stdout
+            try:
+                return real_input(prompt)
+            finally:
+                sys.stdout = pager
+
+        sys.stdout = pager
+        builtins.input = lesson_input
+        try:
+            self.teach()
+            if pager.lines:
+                pager.pause("\n[Press Enter to continue...]")
+        finally:
+            builtins.input = real_input
+            sys.stdout = real_stdout
+
     def show_common_pitfalls(self):
         '''Show pitfalls'''
         if not self.common_pitfalls:
@@ -716,6 +800,11 @@ class Lesson:
         '''Execute lesson'''
         skip_allowed = (self.skippable and progress and save_progress
                         and progress.preferences.get('skip_enabled', True))
+        paged = not progress or progress.preferences.get('page_text', True)
+
+        # Set the scene before offering the knowledge check
+        self.introduce()
+
         if skip_allowed:
             skip_choice = self.can_skip()
 
@@ -732,8 +821,7 @@ class Lesson:
                 else:
                     print("\n➤ Not quite - let's go through the lesson together.")
 
-        self.introduce()
-        self.teach()
+        self.teach_paged(paged)
         self.show_common_pitfalls()
         self.show_best_practices()
 
@@ -122620,9 +122708,10 @@ class StoryMode:
         print("  3. View progress and achievements")
         print("  4. Save game manually")
         print("  5. Return to main menu")
+        print("  6. Reset storyline (delete ALL progress)")
         print()
 
-        choice = input("Choice (1-5): ").strip()
+        choice = input("Choice (1-6): ").strip()
 
         if choice == '1':
             self.continue_quest()
@@ -122633,6 +122722,33 @@ class StoryMode:
         elif choice == '4':
             self.progress.manual_save()
             input("\n[Press Enter...]")
+        elif choice == '6':
+            self.reset_storyline()
+
+    def reset_storyline(self):
+        '''Wipe all progress, only after the player types RESET to confirm'''
+        p = self.progress
+        print("\n" + "=" * 70)
+        print("  ⚠ RESET STORYLINE")
+        print("=" * 70)
+        print("\nThis PERMANENTLY DELETES your save file and all progress:")
+        print(f"  • Hero: {p.player_name} ({p.hero_rank})")
+        print(f"  • Lessons completed: {len(p.completed_lessons)} | {p.total_score} XP | {p.reputation} Rep")
+        print(f"  • Achievements: {len(p.achievements)}, plus your settings")
+        print("\nThis cannot be undone. The story will begin again from the start.")
+        print()
+        confirm = input("Type RESET (all caps) to confirm, or press Enter to cancel: ").strip()
+
+        if confirm != "RESET":
+            print("\n✓ Reset cancelled. Your progress is safe.")
+            input("\n[Press Enter...]")
+            return
+
+        if p.reset_all():
+            print("\n✓ All progress deleted. A new legend awaits...")
+        else:
+            print("\n⚠ Could not delete the save file. Your progress was NOT reset.")
+        input("\n[Press Enter...]")
 
     def continue_quest(self):
         '''Continue from current position - run next lesson'''
@@ -122678,8 +122794,8 @@ class StoryMode:
 
                 # Ask if they want to continue
                 print("\n" + "=" * 70)
-                cont = input("Continue to next lesson? (y/n): ").strip().lower()
-                if cont != 'y':
+                cont = input("Continue to next lesson? (Y/n): ").strip().lower()
+                if cont not in ('', 'y', 'yes'):
                     print("\nProgress saved! Come back anytime to continue your quest.")
                     input("\n[Press Enter...]")
                     return
@@ -122876,7 +122992,7 @@ class ReferenceMode:
             print(f"\n{lesson.description}\n")
 
             # Show the teaching content
-            lesson.teach()
+            lesson.teach_paged()
             lesson.show_common_pitfalls()
             lesson.show_best_practices()
 
@@ -122919,41 +123035,46 @@ def show_title():
     print()
 
 
+def first_run_setup(progress: GameProgress):
+    '''Welcome, placement and character creation for a new game'''
+    print("\n" + "=" * 70)
+    print("  🌿 WELCOME TO FRAYLON 🌿")
+    print("=" * 70)
+    print("\nThe world needs a hero. The Iron Wyrm awakens.")
+    print("Elder Willowbyte calls upon you to master the Language of Nature.")
+    print("\nWill you answer the call?")
+    print()
+
+    assessment = SkillAssessment()
+    recommended_act = assessment.run_assessment()
+    progress.current_act = recommended_act
+    progress.unlocked_acts = list(range(recommended_act + 1))
+    progress.first_run_complete = True
+
+    print("\n" + "=" * 70)
+    print("  CHARACTER CREATION")
+    print("=" * 70)
+    print("\nDefault: Grixle Mossroot, Goblin Druid")
+    choice = input("Use default? (y/n): ").strip().lower()
+    if choice != 'y':
+        name = input("\nYour name: ").strip()
+        if name:
+            progress.player_name = name
+
+    progress.save_progress()
+    print(f"\n✓ Welcome, {progress.player_name}!")
+    input("\n[Press Enter to begin...]")
+
+
 def main_menu():
     '''Main game menu'''
     progress = GameProgress()
 
-    # First-run setup
-    if not progress.first_run_complete:
-        print("\n" + "=" * 70)
-        print("  🌿 WELCOME TO FRAYLON 🌿")
-        print("=" * 70)
-        print("\nThe world needs a hero. The Iron Wyrm awakens.")
-        print("Elder Willowbyte calls upon you to master the Language of Nature.")
-        print("\nWill you answer the call?")
-        print()
-
-        assessment = SkillAssessment()
-        recommended_act = assessment.run_assessment()
-        progress.current_act = recommended_act
-        progress.unlocked_acts = list(range(recommended_act + 1))
-        progress.first_run_complete = True
-
-        print("\n" + "=" * 70)
-        print("  CHARACTER CREATION")
-        print("=" * 70)
-        print("\nDefault: Grixle Mossroot, Goblin Druid")
-        choice = input("Use default? (y/n): ").strip().lower()
-        if choice != 'y':
-            name = input("\nYour name: ").strip()
-            if name:
-                progress.player_name = name
-
-        progress.save_progress()
-        print(f"\n✓ Welcome, {progress.player_name}!")
-        input("\n[Press Enter to begin...]")
-
     while True:
+        # New game, or the storyline was just reset from Story Mode
+        if not progress.first_run_complete:
+            first_run_setup(progress)
+
         show_title()
 
         print(f"Hero: {progress.player_name}")
@@ -123003,9 +123124,10 @@ def main_menu():
                 print(f"  1. Show hints:     {'ON' if p.get('show_hints', True) else 'OFF'}")
                 print(f"  2. Auto-save:      {'ON' if p.get('auto_save', True) else 'OFF'}")
                 print(f"  3. Allow skipping: {'ON' if p.get('skip_enabled', True) else 'OFF'}")
-                print("  4. Back")
+                print(f"  4. Page long story text: {'ON' if p.get('page_text', True) else 'OFF'}")
+                print("  5. Back")
                 print()
-                sett = input("Toggle (1-4): ").strip()
+                sett = input("Toggle (1-5): ").strip()
                 if sett == '1':
                     p['show_hints'] = not p.get('show_hints', True)
                 elif sett == '2':
@@ -123013,6 +123135,8 @@ def main_menu():
                 elif sett == '3':
                     p['skip_enabled'] = not p.get('skip_enabled', True)
                 elif sett == '4':
+                    p['page_text'] = not p.get('page_text', True)
+                elif sett == '5':
                     progress.save_progress()
                     break
                 else:
