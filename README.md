@@ -48,7 +48,7 @@ learner can download it and run it with nothing but Python installed.
 | 🧭 **Skill assessment** | A first-run wizard recommends your starting Act so beginners and experienced devs both start in the right place. |
 | 📈 **RPG progression** | Earn XP (~2,000 total), climb skill levels (Novice → Legendary) and hero ranks (Unknown Wanderer → Mythic Hero of Fraylon), and build reputation. |
 | 💾 **Robust saves** | Auto-save after each lesson plus manual save; corrupt saves recover gracefully. |
-| ⚙️ **Settings** | Toggle hints, auto-save, and lesson-skipping, persisted to your save. |
+| ⚙️ **Settings** | Toggle hints, auto-save, lesson-skipping, and story paging, persisted to your save. |
 | 🧩 **Zero dependencies** | Pure Python standard library; runs on Windows, macOS, and Linux. |
 
 ---
@@ -91,7 +91,12 @@ your hero. Then you reach the **main menu**:
 **A lesson plays out as:** read the narrative intro → study the teaching content
 (examples, key concepts, common pitfalls, best practices) → answer the
 **challenge** quiz → earn XP and advance. Pass the challenge and your progress
-auto-saves; miss it and you can review and try again.
+auto-saves; miss it and you can review and try again. Long story and teaching
+text pauses after each screenful so nothing scrolls past unread (turn this off
+in Settings).
+
+To start over, choose **Story Mode → 6. Reset storyline**. This permanently
+deletes your save, so you must type `RESET` (all caps) to confirm.
 
 ---
 

@@ -18,6 +18,13 @@ Post-2.2.0 work, not yet tagged as a release: a full QA pass that hardened the
 game, plus documentation and repository housekeeping.
 
 ### Fixed — Gameplay & QA (the v2.2.0 game)
+- **The storyline is readable again.** Each lesson's story and teaching text
+  (about 170 lines for a typical lesson, up to about 1,000) was printed in one
+  burst, so it scrolled away and the first thing players saw was the pitfalls
+  and challenge. Lesson text now pauses after each screenful ("Press Enter to keep reading"),
+  sized to the terminal. It is on by default and can be turned off in Settings.
+  The lesson's scene intro now shows before the Knowledge Check, and pressing
+  Enter at "Continue to next lesson?" now continues the story.
 - **Clearer per-lesson skip prompt.** The terse "(c) Continue (s) Skip (q) Quiz
   to skip" prompt before each lesson is now a **Knowledge Check** screen that
   names the lesson, explains it has a short quiz to test what you already know,
@@ -51,6 +58,9 @@ game, plus documentation and repository housekeeping.
   duplicate auto-save message; `time_played` stored tidily.
 
 ### Added
+- **Reset storyline** (Story Mode, last option). Deletes the save file and all
+  progress only after the player types `RESET` in all caps; anything else
+  cancels. The new-game welcome and placement then start again.
 - Root `README.md` (with a Version History section), consolidated `CHANGELOG.md`,
   and a `docs/` folder (index, version history, architecture, release map).
 - `scripts/create-release-tags.sh` to publish a git tag (and optional draft
