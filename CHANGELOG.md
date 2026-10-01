@@ -18,6 +18,12 @@ Post-2.2.0 work, not yet tagged as a release: a full QA pass that hardened the
 game, plus documentation and repository housekeeping.
 
 ### Fixed — Gameplay & QA (the v2.2.0 game)
+- **Clearer per-lesson skip prompt.** The terse "(c) Continue (s) Skip (q) Quiz
+  to skip" prompt before each lesson is now a **Knowledge Check** screen that
+  names the lesson, explains it has a short quiz to test what you already know,
+  and offers: (t) take the quiz (pass to skip), (c) continue to the lesson
+  (default on Enter), or (s) skip entirely. The quiz is now the lesson's real
+  graded challenge instead of a self-reported "do you understand this? yes/no".
 - **New players can skip the placement quiz.** Starting a new story no longer
   pushes beginners through all 10 skill-assessment questions. The first option
   is now "I'm new to Python - skip the quiz, start at Act 0" (also the default
