@@ -652,31 +652,37 @@ class Lesson:
         return True
 
     def can_skip(self) -> str:
-        '''Ask to skip'''
+        '''Offer the lesson's knowledge-check quiz before the lesson'''
         if not self.skippable:
             return 'continue'
 
         print("\n" + "=" * 70)
-        print("  SKIP OPTION")
+        print("  KNOWLEDGE CHECK")
         print("=" * 70)
-        print("\n(c) Continue  (s) Skip  (q) Quiz to skip")
+        print(f"\nThis lesson, \"{self.title}\", has a short quiz to test what you")
+        print("already know. Pass it to prove your skill and move straight on.")
+        print("New to this topic? Just continue - the lesson teaches it from scratch.")
+        print("\nWould you like to:")
+        print("  (t) Take the quiz now - pass it to earn the lesson's XP and move on")
+        print("  (c) Continue to the lesson (default)")
+        print("  (s) Skip this lesson entirely, no quiz")
+        print("\nPassing the quiz earns full XP. Skipping without it earns no XP,")
+        print("but still unlocks the next lesson.")
         print()
 
         while True:
-            choice = input("Choice (c/s/q): ").strip().lower()
-            if choice in ['c', 's', 'q']:
-                return {'c': 'continue', 's': 'skip', 'q': 'quiz'}[choice]
-            print("Invalid")
+            choice = input("Choice (t/c/s, Enter = c): ").strip().lower()
+            if choice in ('', 'c', 's', 't', 'q'):
+                return {'': 'continue', 'c': 'continue', 's': 'skip',
+                        't': 'quiz', 'q': 'quiz'}[choice]
+            print("Invalid. Enter t, c or s.")
 
     def quick_quiz(self) -> bool:
-        '''Quick quiz'''
+        '''Run this lesson's graded challenge as a skip quiz'''
         print("\n" + "=" * 70)
-        print("  SKIP CHECK")
+        print("  KNOWLEDGE CHECK QUIZ")
         print("=" * 70)
-        print("\nSkipped lessons earn no XP but unlock the next lesson.")
-        print()
-        choice = input("Do you already understand this topic? (yes/no): ").strip().lower()
-        return choice == 'yes'
+        return self.challenge()
 
     def show_common_pitfalls(self):
         '''Show pitfalls'''
@@ -719,11 +725,12 @@ class Lesson:
                 return True
             elif skip_choice == 'quiz':
                 if self.quick_quiz():
-                    print("\n✓ Quiz passed! Skipping...")
-                    progress.skip_lesson(self.lesson_id)
+                    # Proven knowledge earns the lesson's full reward
+                    print(f"\n✓ Quiz passed! Knowledge proven - +{self.xp_reward} XP")
+                    progress.complete_lesson(self.lesson_id, score=self.xp_reward)
                     return True
                 else:
-                    print("\n➤ Continuing...")
+                    print("\n➤ Not quite - let's go through the lesson together.")
 
         self.introduce()
         self.teach()
