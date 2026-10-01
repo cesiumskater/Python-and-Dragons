@@ -660,13 +660,14 @@ class Lesson:
         print("  KNOWLEDGE CHECK")
         print("=" * 70)
         print(f"\nThis lesson, \"{self.title}\", has a short quiz to test what you")
-        print("already know. Pass it and you can skip straight past the lesson.")
+        print("already know. Pass it to prove your skill and move straight on.")
         print("New to this topic? Just continue - the lesson teaches it from scratch.")
         print("\nWould you like to:")
-        print("  (t) Take the quiz now - pass it to skip this lesson")
+        print("  (t) Take the quiz now - pass it to earn the lesson's XP and move on")
         print("  (c) Continue to the lesson (default)")
         print("  (s) Skip this lesson entirely, no quiz")
-        print("\nSkipped lessons earn no XP but unlock the next lesson.")
+        print("\nPassing the quiz earns full XP. Skipping without it earns no XP,")
+        print("but still unlocks the next lesson.")
         print()
 
         while True:
@@ -724,8 +725,9 @@ class Lesson:
                 return True
             elif skip_choice == 'quiz':
                 if self.quick_quiz():
-                    print("\n✓ Quiz passed! Skipping this lesson...")
-                    progress.skip_lesson(self.lesson_id)
+                    # Proven knowledge earns the lesson's full reward
+                    print(f"\n✓ Quiz passed! Knowledge proven - +{self.xp_reward} XP")
+                    progress.complete_lesson(self.lesson_id, score=self.xp_reward)
                     return True
                 else:
                     print("\n➤ Not quite - let's go through the lesson together.")
