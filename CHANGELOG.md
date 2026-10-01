@@ -18,6 +18,13 @@ Post-2.2.0 work, not yet tagged as a release: a full QA pass that hardened the
 game, plus documentation and repository housekeeping.
 
 ### Fixed — Gameplay & QA (the v2.2.0 game)
+- **New players can skip the placement quiz.** Starting a new story no longer
+  pushes beginners through all 10 skill-assessment questions. The first option
+  is now "I'm new to Python - skip the quiz, start at Act 0" (also the default
+  when you just press Enter), and invalid input re-prompts instead of starting
+  the quiz. The quiz itself is adaptive: answering "Never coded before" ends it
+  immediately at Act 0, `q` stops it at any point, and it ends early after two
+  missed or skipped questions in a row.
 - **Clean startup.** Removed developer scaffolding that printed ~372 lines of
   build noise on every launch (5 stray `if __name__ == "__main__"` harnesses and
   14 bare top-level `print()` banners left over from concatenated lesson

@@ -292,24 +292,33 @@ class SkillAssessment:
         print("  SKILL ASSESSMENT")
         print("=" * 70)
         print("\nDetermine your starting point in the quest to save Fraylon.")
+        print("\nNew to Python (or to coding)? Skip the quiz - Act 0 starts from zero.")
         print("\nOptions:")
-        print("  1. Take assessment")
-        print("  2. Start at Act 0 (complete beginner)")
+        print("  1. I'm new to Python - skip the quiz, start at Act 0 (default)")
+        print("  2. Take the quick placement quiz (quit anytime with 'q')")
         print("  3. Choose my starting Act")
         print()
 
-        choice = input("Your choice (1/2/3): ").strip()
+        while True:
+            choice = input("Your choice (1/2/3, Enter = 1): ").strip()
+            if choice in ('', '1', '2', '3'):
+                break
+            print("Invalid. Enter 1, 2 or 3.")
 
-        if choice == '2':
+        if choice in ('', '1'):
+            print("\n✓ Starting at Act 0: The Awakening. Every hero starts somewhere!")
             return 0
         elif choice == '3':
             return self._manual_selection()
 
         print("\n" + "=" * 70)
         print("  BEGIN ASSESSMENT")
-        print("=" * 70 + "\n")
+        print("=" * 70)
+        print("\nType 'skip' to pass on a question, or 'q' to stop the quiz.")
+        print("The quiz also ends early if two questions in a row are missed.\n")
 
         self.score = 0
+        misses_in_a_row = 0
         for i, q in enumerate(self.questions, 1):
             print(f"\nQuestion {i}/{len(self.questions)}:")
             print(q['question'])
@@ -318,20 +327,42 @@ class SkillAssessment:
                 print(f"  {opt}")
 
             while True:
-                answer = input("\nAnswer (A/B/C/D or 'skip'): ").strip().upper()
-                if answer in ['A', 'B', 'C', 'D', 'SKIP']:
+                answer = input("\nAnswer (A/B/C/D, 'skip' or 'q'): ").strip().upper()
+                if answer in ['A', 'B', 'C', 'D', 'SKIP', 'Q', 'QUIT']:
                     break
                 print("Invalid. Try again.")
 
+            if answer in ('Q', 'QUIT'):
+                print("\nQuiz stopped - placing you based on your answers so far.")
+                break
+
+            # Experience question: a complete beginner has nothing to test yet
+            if i == 1 and answer == 'A':
+                print("\nWelcome, new hero! No quiz needed - Act 0 teaches from the very start.")
+                self.score = 0
+                self.recommended_act = 0
+                return 0
+
             if answer == 'SKIP':
                 print("Skipped.")
-                continue
-
-            self.score += q['points'].get(answer, 0)
-            if answer == q['answer']:
-                print("✓ Correct!")
+                misses_in_a_row += 1
             else:
-                print(f"✗ Incorrect. Answer: {q['answer']}")
+                self.score += q['points'].get(answer, 0)
+                if answer == q['answer']:
+                    print("✓ Correct!")
+                    misses_in_a_row = 0
+                elif i == 1:
+                    # Q1 asks about experience; there is no wrong answer
+                    print("Noted.")
+                    misses_in_a_row = 0
+                else:
+                    print(f"✗ Incorrect. Answer: {q['answer']}")
+                    misses_in_a_row += 1
+
+            if misses_in_a_row >= 2 and i < len(self.questions):
+                print("\nThat's enough to find your starting point - the remaining")
+                print("questions only get harder. Ending the quiz early.")
+                break
 
         self.recommended_act = self._calculate_recommended_act()
 
